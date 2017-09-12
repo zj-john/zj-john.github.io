@@ -4,13 +4,12 @@
 
 # Site
 title: zj-john's blog
-subtitle: 我认真起来自己都害怕
-description: 华东师范大学12级研究生，前端一枚，产品经理半枚，运维工程师半枚
+subtitle: ECNU 12级CS研究生，前端一枚，产品经理半枚，运维工程师半枚
+description: 前端, javascript, jquery, angular, react, html, html5, css, css3, less, gulp, webpack, 用户体验
 author: zj-john
 language: zh-CN
 timezone: Asia/Shanghai
 email: zj-john@qq.com
-keywords: "前端, javascript, jquery, angular, react, html, html5, css, css3, less, gulp, webpack, 用户体验"
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://zj-john.github.io/
@@ -43,7 +42,7 @@ highlight:
   line_number: true
   auto_detect: false
   tab_replace:
-  
+
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
 # per_page: Posts displayed per page. (0 = disable pagination)
@@ -52,7 +51,7 @@ index_generator:
   path: ''
   per_page: 10
   order_by: -date
-  
+
 # Category & Tag
 default_category: uncategorized
 category_map:
@@ -81,7 +80,7 @@ deploy:
   type: git
   repo: git@github.com:zj-john/zj-john.github.io.git
   branch: master
- 
+
 jsonContent:
   meta: false
   pages: false
