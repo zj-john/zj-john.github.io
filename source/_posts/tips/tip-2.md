@@ -1,5 +1,5 @@
 ---
-title: tip-2
+title: clean-webpack-plugin :clean from outside of the project root
 categories:
   - tips
 tags:
