@@ -10,6 +10,8 @@ date: 2017-09-14 11:20:24
 ---
 > 问题：使用virtualenv搭建Django老项目，遇到Django:No module named MYSQLdb
 
+<!-- more -->
+
 #### centos   
 You need to use one of the following commands. Which one depends on what OS and software you have and use.
 

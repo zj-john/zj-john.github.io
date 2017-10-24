@@ -10,6 +10,8 @@ date: 2017-09-18 11:17:34
 ---
 > 问题：clean-webpack-plugin :clean from outside of the project root
 
+<!-- more -->
+
 webpack中的clean-webpack-plugin插件一般用于在打包前删除打包(dist)目录。  
 ``` Javascript
 //install

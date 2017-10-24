@@ -8,6 +8,8 @@ date: 2017-10-16 10:51:12
 ---
 > 问题：正则表达式中 (?:pattern)的含义
 
+<!-- more -->
+
 在看jQuery源码的时候，碰到"/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/"这个正则表达式，对其中的(?:pattern)不太明白。
 
 [官网](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_Expressions)解释如下：  

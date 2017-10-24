@@ -10,6 +10,8 @@ date: 2017-10-13 12:12:46
 ---
 > 问题：ng-table中使用全局搜索
 
+<!-- more -->
+
 在使用angular作为主体语言的项目中，一般选用[ngTable](http://ng-table.com/#/)来展示表格。
 > jQuery中常用的datatable在angular中效果并不理想。在使用ng-repeat这种angular的方式渲染时，性能慢的出奇。换为后端defer的方式加载的话，性能会有提升，但是这种方式失去了angular数据响应式渲染的有点。
 

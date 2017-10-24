@@ -10,6 +10,8 @@ date: 2017-10-09 15:08:58
 ---
 > 问题： chrome button按钮点击之后会有蓝色边框
 
+<!-- more -->
+
 为了更好的用户体验，chrome浏览器默认会为当前获得焦点的button添加outline属性（一个带颜色的边框），这样可以方便用户使用tab键更换当前焦点按钮。
 
 ![蓝色边框](/images/button-outline.jpg)
