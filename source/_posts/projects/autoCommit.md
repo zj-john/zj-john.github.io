@@ -1,3 +1,4 @@
+---
 title: 一个向GitHub定期自动提交commit的小脚本
 tags:
   - github
@@ -7,6 +8,7 @@ tags:
 categories:
   - projects
 date: 2017-09-05 16:32:52
+toc: true
 ---
 > 偷懒是人类进步的阶梯。  
 

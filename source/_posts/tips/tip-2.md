@@ -7,6 +7,7 @@ tags:
   - clean-webpack-plugin
   - allowExternal
 date: 2017-09-18 11:17:34
+toc: true
 ---
 > 问题：clean-webpack-plugin :clean from outside of the project root
 

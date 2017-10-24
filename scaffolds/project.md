@@ -5,4 +5,5 @@ categories:
   - projects
 tags:
   - project
+toc: true
 ---

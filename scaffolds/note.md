@@ -5,4 +5,5 @@ categories:
   - notes
 tags:
   - note
+toc: true
 ---

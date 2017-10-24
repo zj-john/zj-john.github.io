@@ -5,6 +5,7 @@ categories:
 tags:
   - tip
 date: 2017-10-12 18:05:22
+toc: true
 ---
 > 问题：如何选择NPM依赖包版本号前缀
 

@@ -7,6 +7,7 @@ tags:
   - button
   - outline
 date: 2017-10-09 15:08:58
+toc: true
 ---
 > 问题： chrome button按钮点击之后会有蓝色边框
 

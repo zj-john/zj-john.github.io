@@ -6,6 +6,7 @@ tags:
   - git
   - ignore
 date: 2017-09-20 11:28:59
+toc: true
 ---
 > 问题：Git ignore 修改后不生效
 

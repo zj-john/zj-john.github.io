@@ -6,6 +6,7 @@ categories:
 tags:
   - npm
   - cnpm
+toc: true
 ---
 # npm
 **描述**：

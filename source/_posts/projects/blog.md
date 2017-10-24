@@ -8,6 +8,7 @@ tags:
   - hexo
   - blog
   - yilla
+toc: true
 ---
 > Blog是提升逼格的利器。  
 

@@ -6,6 +6,7 @@ tags:
   - git
   - add
 date: 2017-09-21 10:10:00
+toc: true
 ---
 > 问题：git add -all 无法提交当前目录外的变动
 
