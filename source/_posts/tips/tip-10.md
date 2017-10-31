@@ -11,11 +11,12 @@ toc: true
 ---
 > 问题：react-bootstrap-typeahead的使用
 
-<!-- more -->
-
 最近开发react应用，用到的是[react-bootstrap](https://react-bootstrap.github.io/components.html#)来构建基础样式。但是用于input的typeahead组件，这个框架中没有提供。为了样式的统一，最终选用了[react-bootstrap-typeahead](https://github.com/ericgio/react-bootstrap-typeahead)这个typeahead控件。   
 使用过程中遇到了以下几个问题，在此记录一下：
-* 效果和[控件demo](http://ericgio.github.io/react-bootstrap-typeahead/)不符
+
+<!-- more -->
+
+# 效果和[控件demo](http://ericgio.github.io/react-bootstrap-typeahead/)不符
 
  直接npm install --save react-bootstrap-typeahead后，仿照demo中的代码使用，发现展示效果和demo的样式差别很大，不是想要的效果。   
  通过对demo版本的比较发现，直接通过下列命令安装的版本是2.0.0-alpha.4版本，而GitHub中demo的版本是1.4.2。  
@@ -30,19 +31,19 @@ npm install --save react-bootstrap-typeahead@1.4.2
 
 ```
 
-* query 与 response 内容不匹配，不显示option  
+# query 与 response 内容不匹配，不显示option  
 这个问题的表征是如果你搜索了"z_j",后端返回的是一个字典数组[{"name":'zj-john'}],此时labelKey是"zj-john",并不和z_j匹配，所以typeahead的可选择项为空。  
 原因是"By default, the filtering algorithm only searches the field that corresponds to labelKey. However, you can pass an array of additional fields to search"  
 <b>解决： 使用 filterBy={["query"]} 属性，增加匹配字段</b>
 
-* 实现input不能输入，只能从select获取值  
+# 实现input不能输入，只能从select获取值  
 插件虽然提供了onblur的方法，但是使用 onBlur 属性，对于keyboard选择支持良好，对click支持不佳。 click中先执行onBlur，再执行onChange，导致选中框被提前清空。 具体可参考以下issues：[112](https://github.com/ericgio/react-bootstrap-typeahead/issues/112)
 [119](https://github.com/ericgio/react-bootstrap-typeahead/issues/119)
 [127](https://github.com/ericgio/react-bootstrap-typeahead/issues/127)
 [210]( https://github.com/ericgio/react-bootstrap-typeahead/issues/210)  
 <b>解决：延时执行onblur </b>  
 
-完整用法参考如下：
+# 完整用法
 ```Javascript
 handleOwnerBlur = () => {
   //对于click事件，会先执行onBlur，再执行onChange，导致选中框被提前清空。所以延时0.5s

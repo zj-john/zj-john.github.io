@@ -14,7 +14,7 @@ toc: true
 
 <!-- more -->
 
-解决方案如下：
+# 解决方案：
 ```javascript
 //js
 //this.onerror='' 防止默认图片失效导致死循环

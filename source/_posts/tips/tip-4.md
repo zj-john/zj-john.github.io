@@ -12,6 +12,7 @@ toc: true
 
 <!-- more -->
 
+# 解决方法
 .gitignore文件中新加了忽略规则，发现并未生效。   
 原因：.gitignore只能忽略没有被追踪的文件，如果文件已经被纳入了版本管理中，则修改无效。  
 解决：先把本地缓存删除（改变成未被追踪状态），然后再提交。
@@ -24,7 +25,7 @@ git add .
 git commit -m 'update .gitignore'
 ```
 
->tips: gitignore
+# 扩展学习：gitignore语法
 
 忽略文件的原则是：  
 - 忽略操作系统自动生成的文件，比如缩略图等；
@@ -32,8 +33,6 @@ git commit -m 'update .gitignore'
 - 忽略带有敏感信息的配置文件，比如存放口令的配置文件。
 
 如果不知道有哪些文件需要忽略，可以参考[ignore template](https://github.com/github/gitignore),里面根据语言列出了对应ignore的模板
-
-
 
 以下语法应用在.gitignore文件中（若根目录下没有，可手工新建）。  
 

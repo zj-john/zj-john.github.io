@@ -9,8 +9,6 @@ toc: true
 ---
 > 问题：如何选择NPM依赖包版本号前缀
 
-<!-- more -->
-
 跑别人的代码，发现有两个依赖包没有安装。准备配置到package.json中时发现依赖包版本前还有前缀，这都是啥意思。
 ```Javascript
 "dependencies": {
@@ -27,6 +25,9 @@ toc: true
   "browser-sync-spa": "~1.0.3"
 }
 ```
+
+<!-- more -->
+# 解决方法
 参考回答：
 [stackoverflow](https://stackoverflow.com/questions/22343224/whats-the-difference-between-tilde-and-caret-in-package-json)
 [官网](https://docs.npmjs.com/misc/semver)
@@ -39,6 +40,7 @@ toc: true
 
 >注意^版本更新可能比较大，会造成项目代码错误;使用~来标记版本号，这样可以保证项目不会出现大的问题，也能保证包中的小bug可以得到修复
 
+# 扩展学习
 除了~和^外，还有其他前缀可以使用，见下：
 * version Must match version exactly
 * \>version Must be greater than version

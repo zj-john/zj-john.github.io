@@ -8,12 +8,16 @@ tags:
 date: 2017-09-15 11:27:32
 toc: true
 ---
+
+json-server是一款常用的mock插件。
+
 >教程/源码
 https://github.com/typicode/json-server
 
->中文mock推荐结合mock.js使用，支持更好
 
-#### 基本用法：
+<!-- more -->
+
+# 基本用法：
 ```Javascript
 // 全局安装
 npm install json-server -g
@@ -52,7 +56,7 @@ module.exports = function() {
 json-server db.js -p 3003
 ```
 
-#### 配置
+# 配置
 可以在根目录（mock）下使用一个json文件对api进行配置：
 ```Javascript
 // /mock/json-server.json
@@ -96,7 +100,7 @@ json-server db.js --config json-server.json
 js, css ,markdown 文件等,如：http://localhist:3003/readme.md。  
 此时默认主页无法访问 :Returns default index file or serves ./public directory
 
-#### URL 过滤
+# URL 过滤
 ```Javascript
 // json内容示例
 {
@@ -153,3 +157,5 @@ PUT    /posts/1
 PATCH  /posts/1
 DELETE /posts/1
 ```
+
+>中文mock推荐结合mock.js使用，支持更好

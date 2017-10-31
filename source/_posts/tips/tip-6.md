@@ -11,13 +11,14 @@ toc: true
 ---
 > 问题： chrome button按钮点击之后会有蓝色边框
 
-<!-- more -->
-
-为了更好的用户体验，chrome浏览器默认会为当前获得焦点的button添加outline属性（一个带颜色的边框），这样可以方便用户使用tab键更换当前焦点按钮。
+为了更好的用户体验，chrome浏览器默认会为当前获得焦点的button添加outline属性（一个带颜色的边框），这样可以方便用户使用tab键更换当前焦点按钮。怎么去除这种效果呢？
 
 ![蓝色边框](/images/button-outline.jpg)
 
-解决方法：如果想要去掉这种效果，可以在css中添加样式
+<!-- more -->
+
+# 解决方法
+如果想要去掉这种效果，可以在css中添加样式
 ```Javascript
 button:focus {outline:none;}
 //或者

@@ -11,13 +11,13 @@ toc: true
 ---
 > 问题：datatable通过post ajax方式获取源数据
 
-<!-- more -->
-
 Datatable大概是最常用的table插件了，其中ajax是获取源数据最常用的方式。Datatable ajax的一般使用同jQuery的ajax，非常方便。但是如果通过post方式传输数据，参数的使用方式上就有区别。
+
+<!-- more -->
 
 [官网](https://datatables.net/reference/option/ajax)镇贴.
 
-解决办法：
+# 解决办法
 ```JavaScript
 // url是api 接口；data是传参
 let {url, data, type} = options.ajax;
@@ -37,8 +37,8 @@ ajax = {
 
 <hr/>
 
-##### datatable ajax支持三种参数说明：
-* string(url)   
+# datatable ajax支持三种参数说明：
+## string(url)   
   指定返回数据的url。Datatables默认接收的是一个属性为data，如果你返回的数据不是这样， 你需要使用 ajax.dataSrc来处理。   
   只能用于Get请求。
 
@@ -55,10 +55,10 @@ $('#example').DataTable( {
 } );
 ```
 
-* object(类似于ajax)  
+## object(类似于ajax)  
 其中以下3个参数有特殊用法。
 
-data的用法：  
+### data的用法  
 ```Javascript
 // 添加一个静态值，来提交额外的参数.不允许变量
 $('#example').dataTable({
@@ -126,7 +126,7 @@ function reloadTable() {
     oTable.ajax.reload();
 }
 ```
-dataSrc的用法：  
+### dataSrc的用法  
 当ajax或server-side process时，datatable默认在获取数据中找“data”属性作为源数据。如果需要换这个属性值的话，有以下2种方式。  
 <b>string：</b>
 
@@ -165,10 +165,10 @@ $('#example').dataTable( {
 ```
 
 
-success的用法：  
+### success的用法
 在datatable中不要使用success函数。因为datatable内部有使用success这个函数，如果自定义内部函数会被覆盖掉。如果需要处理返回值，可以使用dataSrc来处理。
 
-* function(自定义)
+## function(自定义)
 
 ```Javascript
 $('#example').DataTable({

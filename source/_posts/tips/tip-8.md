@@ -11,15 +11,16 @@ toc: true
 ---
 > 问题：ng-table中使用全局搜索
 
-<!-- more -->
-
 在使用angular作为主体语言的项目中，一般选用[ngTable](http://ng-table.com/#/)来展示表格。
 > jQuery中常用的datatable在angular中效果并不理想。在使用ng-repeat这种angular的方式渲染时，性能慢的出奇。换为后端defer的方式加载的话，性能会有提升，但是这种方式失去了angular数据响应式渲染的有点。
 
 ngTable中的默认的search方式，是给每一列加自己的筛选。如下图：  
 ![](/images/ngTable.png)
 
-这种过滤方式的优点是精准，但是缺点也很明显，无法做到全局匹配。如果想做到类似于datatable中全局搜索的效果应该怎么操作呢？  
+这种过滤方式的优点是精准，但是缺点也很明显，无法做到全局匹配。如果想做到类似于datatable中全局搜索的效果应该怎么操作呢？
+
+<!-- more -->
+# 解决方法
 直接上代码：
 ```Javascript
 //html 部分
@@ -48,11 +49,10 @@ vm.search = function(){
   });
 }
 ```
-代码十分简单，不过有两个问题要注意下：
-1. 为什么不在html中ng-repeat后直接filter  
+为什么不在html中ng-repeat后直接filter呢？    
 一般来说，首先会使用ng-repeat="d in $data | filter:page.keyword"的方式进行过滤。但是这种方式在ngTable中行不通，因为这里的$data实际是ngTable做了分页后的数据，也就是currentPageData，所以filter只能过滤当前页面的内容。
 
-2. controller中$filter的用法  
+# 扩展学习：controller中$filter的用法  
 filter一般在html中用于格式化，在controller中也可以通过$filter使用。在使用中要了解filter原型，以便传参。另外，两者用法有所区别：  
 
 ```Javascript

@@ -9,14 +9,16 @@ tags:
 toc: true
 ---
 # npm
-**描述**：
+## 描述
 > nodejs的包管理器，用于node插件管理（包括安装、卸载、更新、查看、搜索、发布等）
 
-**教程**：
-> [基础教程](http://www.runoob.com/nodejs/nodejs-npm.html/)  
-[官网教程](https://docs.npmjs.com)
+## 教程
+* [基础教程](http://www.runoob.com/nodejs/nodejs-npm.html/)  
+* [官网教程](https://docs.npmjs.com)
 
-**常用命令**：
+<!-- more -->
+
+## 常用命令
 ```Javascript
 //npm初始化，在当前目录下生成package.json文件
 npm init
@@ -75,12 +77,12 @@ npm run {script name}
 >如果你希望具备两者功能，则需要在两个地方安装它或使用 npm link。
 
 
-# npm换源：
-###### 淘宝npm镜像  
+# npm换源
+## 淘宝npm镜像  
 搜索地址：http://npm.taobao.org/  
 registry地址：http://registry.npm.taobao.org/  
 
-###### 如何使用
+## 使用
 有很多方法来配置npm的registry地址，下面根据不同情境列出几种比较常用的方法。  
 以淘宝npm
 镜像举例：  

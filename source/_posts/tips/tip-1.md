@@ -13,7 +13,7 @@ toc: true
 
 <!-- more -->
 
-#### centos   
+# centos   
 You need to use one of the following commands. Which one depends on what OS and software you have and use.
 
  1. **easy_install mysql-python**(mix os)
@@ -24,7 +24,7 @@ You need to use one of the following commands. Which one depends on what OS and 
 
 For Windows, see this answer: https://stackoverflow.com/q/21440230/4646678
 
-#### Windows
+# Windows
 
 如果你全局可以安装mysql-python，把python目录 (默认C:/python27)下lib/site-package目录中的以下4个文件复制到你的虚拟环境的site-packages目录下，就可以了。
 

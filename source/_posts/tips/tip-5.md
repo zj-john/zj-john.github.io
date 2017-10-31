@@ -12,6 +12,7 @@ toc: true
 
 <!-- more -->
 
+# 解决方法
 在git2.0版本中，提交所有变动需要使用git add -all :/ 替代 git add -all，后者只能提交当前目录的变动。
 
 ```
