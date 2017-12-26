@@ -12,10 +12,22 @@ timezone: Asia/Shanghai
 email: zj-john@qq.com
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+
+# abbrlink config
+# 算法：crc16(default) and crc32
+# 进制：dec(default) and hex
+abbrlink:
+  alg: crc16  
+  rep: dec 
+
+
 url: https://zj-john.github.io/
 root: /
-permalink: :year/:month/:day/:title/
+permalink: :category/:id.html
 permalink_defaults:
+
+   
+
 
 # Directory
 source_dir: source
