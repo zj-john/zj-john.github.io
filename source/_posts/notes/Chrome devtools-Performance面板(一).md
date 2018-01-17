@@ -54,6 +54,12 @@ chrome大概是最常用的浏览器之一，这篇笔记讲解下Chrome devtool
 ![](/images/profiling.png)
 ![](/images/results.png)
 
+选项说明：
+* Disable JavaScript samples：禁用JS Func调用堆栈,减少了对移动设备运行时开销（reduces overhead when running against mobile devices.）
+* Throttle the network while recording：更改网络情况
+* Enable advanced paint instrumentation：显示更为详尽的图表指导,把重要的性能开销置顶（instroduces significant performance overhead.）
+* Throttle the CPU while recording：更改CPU情况
+
 ## 分析结果
 
 ### 分析FPS
@@ -104,6 +110,8 @@ FPS图表下是CPU图表，CPU图表中的颜色说明和Summary部分一致。�
 通过在时间轴上点击，鼠标滚轮来放大一个单一的 Animation Frame Fired Event.此时Summary显示的这个event的具体信息。
 
 > 放大事件的另一个方法是点击后利用W A S D键来操作。W,S是放大、缩小；A,D是移动.
+
+快速搜索：Ctrl + F ，可以使用正则和忽略大小写两个模式
 
 ![](/images/zoomed.png)
 
