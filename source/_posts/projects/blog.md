@@ -15,6 +15,11 @@ toc: true
 启用GitHub后，首先想到的便是利用GitHub的资源，搭建一下自己的博客。  
 参考了网上的很多教程，也踩了很多坑，经验教训如下：
 
+- **功能**：Blog
+- **工具**：GitHub, hexo, yilia  
+- **难度等级**: ★★
+- **项目地址**: https://github.com/zj-john/zj-john.github.io
+
 <!-- more -->
 
 # 1.GitHub新建repository
