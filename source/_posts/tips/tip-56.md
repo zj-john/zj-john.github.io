@@ -13,6 +13,9 @@ date: 2018-08-27 11:05:28
 给磁盘加了容量后，fdisk中已经看到，df中还没有。
 
 下面是识别过程：
+
+<!-- more -->
+
 ```shell
 [root@myVM ~]# parted /dev/sda
 GNU Parted 2.1

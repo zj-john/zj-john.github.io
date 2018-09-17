@@ -1,7 +1,7 @@
 ---
 title: 利用service worker缓解DNS劫持
 categories:
-  - notes
+  - projects
 tags:
   - service woker
   - DNS劫持

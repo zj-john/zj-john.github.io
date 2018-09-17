@@ -1,7 +1,7 @@
 ---
 title: 5分钟搭建属于自己的mock server平台
 categories:
-  - notes
+  - projects
 tags:
   - mock server
   - service worker
