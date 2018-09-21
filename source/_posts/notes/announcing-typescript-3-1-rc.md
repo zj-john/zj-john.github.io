@@ -8,19 +8,19 @@ toc: true
 date: 2018-09-17 20:12:01
 ---
 
-今天我们很高兴地宣布TypeScript 3.1的候选版本（RC）的可用性。我们对RC的意图是收集任何和所有反馈，以便我们确保我们的最终版本尽可能愉快。
+今天[2018-09-13]，我们很高兴地宣布TypeScript 3.1的候选版本（RC）可用了。发布RC的目的是为了收集任何意见和建议，以便确保我们正式版本的发布尽可能顺利。
 
-如果您现在想[试一试](https://www.nuget.org/packages/Microsoft.TypeScript.MSBuild)，可以[通过NuGet](https://www.nuget.org/packages/Microsoft.TypeScript.MSBuild)获取RC ，或使用以下命令使用npm：
+如果您现在想试一试，可以通过[NuGet](https://www.nuget.org/packages/Microsoft.TypeScript.MSBuild)获取RC ，或使用以下命令使用npm：
 
 ```npm
 npm install -g typescript @ rc
 ```
 
-您也可以获得编辑支持
+以下编译器也已支持RC版本
 
-*   [下载Visual Studio 2017](http://download.microsoft.com/download/7/0/A/70A6AC0E-8934-4396-A43E-445059F430EA/3.1.0-TS-release-dev14update3-20180911.1/TypeScript_SDK.exe)（适用于15.2或更高版本）
-*   [下载Visual Studio 2015](http://download.microsoft.com/download/6/D/8/6D8381B0-03C1-4BD2-AE65-30FF0A4C62DA/3.1.0-TS-release-dev14update3-20180911.1/TypeScript_Dev14Full.exe)（使用[Update 3](https://www.visualstudio.com/en-us/news/releasenotes/vs2015-update3-vs)）
-*   遵循[Visual Studio Code](https://code.visualstudio.com/Docs/languages/typescript#_using-newer-typescript-versions)和[Sublime Text的说明](https://github.com/Microsoft/TypeScript-Sublime-Plugin/#note-using-different-versions-of-typescript)。
+*   下载[Visual Studio 2017](http://download.microsoft.com/download/7/0/A/70A6AC0E-8934-4396-A43E-445059F430EA/3.1.0-TS-release-dev14update3-20180911.1/TypeScript_SDK.exe)（适用于15.2或更高版本）
+*   下载[Visual Studio 2015](http://download.microsoft.com/download/6/D/8/6D8381B0-03C1-4BD2-AE65-30FF0A4C62DA/3.1.0-TS-release-dev14update3-20180911.1/TypeScript_Dev14Full.exe)（使用[Update 3](https://www.visualstudio.com/en-us/news/releasenotes/vs2015-update3-vs)）
+*   遵循[Visual Studio Code](https://code.visualstudio.com/Docs/languages/typescript#_using-newer-typescript-versions)和[Sublime Text](https://github.com/Microsoft/TypeScript-Sublime-Plugin/#note-using-different-versions-of-typescript)的说明。
 
 让我们来看看TypeScript 3.1中会出现什么！
 
@@ -28,7 +28,7 @@ npm install -g typescript @ rc
 
 ## 可映射的元组和数组类型
 
-映射列表中的值是编程中最常见的模式之一。作为示例，我们来看看以下JavaScript代码：
+遍历列表中的值是编程中最常见的模式之一。作为示例，我们来看看以下JavaScript代码：
 
 ```js
 function stringifyAll(...elements) {
@@ -36,14 +36,15 @@ function stringifyAll(...elements) {
 }
 ```
 
-该`stringifyAll`函数接受任意数量的值，将每个元素转换为字符串，将每个结果放在一个新数组中，然后返回该数组。如果我们想要最常用的类型`stringifyAll`，我们将其声明为：
+该`stringifyAll`函数接受任意数量的值，将每个元素转换为字符串，并将结果放在一个新数组中，然后返回该数组。  
+如果我们希望支持各种类型转换的`stringifyAll`，我们可以将其声明为：
 
 
 ```ts
 declare function stringifyAll(...elements: unknown[]): Array<string>;
 ```
 
-这基本上说，“这个东西需要任意数量的元素，并返回一个`string`s 数组”; 但是，我们`elements`在这次转型中失去了一些信息。
+这个声明表示，“这个东西需要任意数量的元素，并返回一个`string`类型的数组”; 但是，我们`elements`在这次转型中失去了一些信息。
 
 具体来说，类型系统不记得用户传入的元素数量，因此我们的输出类型也没有已知的长度。我们可以通过重载做类似的事情：
 
@@ -57,7 +58,7 @@ declare function stringifyAll(...elements: [unknown, unknown, unknown]): [string
 
 呃。我们甚至没有涵盖_四个_要素。你最终会特别容纳所有这些可能的重载，你最终会得到我们所谓的“一千次重载导致的死亡”问题。当然，我们可以使用条件类型而不是重载，但是你会有一堆嵌套的条件类型。
 
-如果只有_一种方法可以在这里统一映射每种类型......
+如果只有一种方法可以在这里统一映射每种类型......
 
 好吧，TypeScript已经有了类似的功能。TypeScript有一个称为映射对象类型的概念，它可以从现有类型中生成新类型。例如，给定以下`Person`类型，
 
@@ -141,7 +142,7 @@ let len: 2 = stringyCoordinates.length
 ```ts
 stringyCoordinates.forEach(x => console.log(x));
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// 无法调用类型缺少调用签名的表达式。类型“字符串”没有兼容的呼叫签名。
+// Cannot invoke an expression whose type lacks a call signature. Type 'String' has no compatible call signatures.
 ```
 
 咦？导致此严重错误消息的原因是什么？那么我们的`Stringify`映射类型不仅映射了我们的元组成员，它还映射了方法`Array`以及`length`属性！所以`forEach`，`length`两者都有类型`string`！
@@ -219,11 +220,11 @@ namespace FooComponent {
 
 我们的团队总是努力避免引入重大变化，但不幸的是有些人需要注意TypeScript 3.1。
 
-## 已删除特定于供应商的声明
+### 已删除特定于供应商的声明
 
 TypeScript 3.1现在`lib.d.ts`使用WHATWG DOM规范提供的Web IDL文件生成部分（和其他内置声明文件库）。虽然这意味着`lib.d.ts`更容易保持最新，但许多特定于供应商的类型已被删除。我们在[维基上](https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes)更详细地[介绍了](https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes)这一点。
 
-## 缩小功能的差异
+### 缩小功能的差异
 
 使用`typeof foo === "function"`型保护用的由相对可疑联合类型相交时可提供不同的结果`{}`，`Object`或不受约束泛型。
 
@@ -237,7 +238,7 @@ function foo(x: unknown | (() => string)) {
 
 您可以在[我们的wiki的重大更改部分](https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes#narrowing-functions-now-intersects--object-and-unconstrained-generic-type-parameters)阅读更多内容。
 
-## 向前走
+## 未来
 
 我们期待听到您对RC的体验。与往常一样，请密切关注[我们的路线图](https://github.com/Microsoft/TypeScript/wiki/Roadmap)，以便在我们稳定时全面了解发布情况。我们希望在短短几周内发布我们的最终版本，所以现在就试试吧！
 
