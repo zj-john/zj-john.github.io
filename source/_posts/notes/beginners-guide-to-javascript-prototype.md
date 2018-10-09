@@ -4,6 +4,7 @@ categories:
   - notes
   - JavaScript
   - prototype
+  - 2018.10.05
 tags:
   - JavaScript Weekly
 toc: true
@@ -169,7 +170,7 @@ date: 2018-10-08 14:13:35
 ```
 所以现在当我们调用时`leo.eat`，JavaScript将eat在leo对象上查找方法。那个查找将失败，因为Object.create，它将委托给`animalMethods`对象，然后它将找到`eat`。
 
-到现在为止还挺好。尽管如此，我们仍然可以做出一些改进。为了跨实例共享方法，必须管理一个单独的对象（`animalMethods`）似乎有点“骇客” 。但这似乎是您希望在语言本身中实现的常见功能。原来它是，这就是你在这里的全部原因 - `原型`。
+到现在为止还挺好。尽管如此，我们仍然可以做出一些改进。为了跨实例共享方法，必须管理一个单独的对象（`animalMethods`）似乎有点“骇客” 。但这似乎是您希望在语言本身中实现的常见功能。其实它一直都在，这也是你在这里的原因 - `原型`。
 
 那究竟什么是JavaScript中的`原型`呢？好吧，简单地说，JavaScript中的每个函数都有一个`prototype`引用对象的属性。亲自测试一下。
 
@@ -211,7 +212,7 @@ date: 2018-10-08 14:13:35
     leo.eat(10)
     snoop.play(5)
 ```
-希望你有一个很大的“啊哈”时刻。同样，`prototype`它只是JavaScript中每个函数都具有的属性，并且如上所述，它允许我们在函数的所有实例之间共享方法。我们所有的功能仍然是相同的，但现在我们不必为所有方法管理一个单独的对象，我们可以使用内置于`Animal`函数本身的另一个对象，`Animal.prototype`
+希望你有一个很大的“啊哈”时刻。同样，`prototype`它只是JavaScript中每个函数都具有的属性，并且如上所述，它允许我们在函数的所有实例之间共享方法。我们所有的功能仍然是相同的，但现在我们不必为所有方法管理一个单独的对象，我们可以使用内置于`Animal`函数本身的另一个对象，`Animal.prototype`。
 
 
 * * *
@@ -226,9 +227,9 @@ date: 2018-10-08 14:13:35
 3. 如何使用Object.create将失败的查找委托给函数的原型。
 这三个任务似乎是任何编程语言的基础。JavaScript是否真的那么糟糕，没有更简单，“内置”的方式来完成同样的事情？正如你可能在这一点上猜测的那样，它是通过使用`new`关键字来实现的。
 
-我们采取的缓慢，有条理的方法有什么好处，你现在可以深入了解`new` JavaScript中的关键字在底层做了什么。
+我们采取的缓慢，有条理的方法有什么好处，你现在可以深入了解`new`关键字在JavaScript中的底层做了什么。
 
-回顾一下我们的`Animal` 构造函数，最重要的两个部分是创建对象并返回它。如果不创建对象`Object.create`，我们将无法在失败的查找上委托函数的原型。如果没有该`return`语句，我们将永远不会收回创建的对象。
+回顾一下我们的`Animal` 构造函数，最重要的两个部分是创建对象和返回它。如果不创建对象`Object.create`，我们将无法在失败的查找上委托函数的原型。如果没有该`return`语句，我们将永远不会收回创建的对象。
 
 ```js
     function Animal (name, energy) {
@@ -239,7 +240,7 @@ date: 2018-10-08 14:13:35
       return animal
     }
 ```
-这是很酷的事情`new` \- 当你使用`new`关键字调用一个函数时，这两行是隐式地（“引擎盖下”）完成的，并且调用创建的对象`this`。
+这是很酷的事情`new` \- 当你使用`new`关键字调用一个函数时，这两行是隐式地完成的，并且调用创建的对象`this`。
 
 使用注释来显示在幕后发生的事情并假设`Animal`使用`new`关键字调用构造函数，可以将其重写为此。
 
@@ -256,7 +257,7 @@ date: 2018-10-08 14:13:35
     const leo = new Animal('Leo', 7)
     const snoop = new Animal('Snoop', 10)
 ```
-没有“引擎盖下”的评论
+没有注释的情况
 ```js
     function Animal (name, energy) {
       this.name = name
@@ -281,8 +282,7 @@ date: 2018-10-08 14:13:35
     const leo = new Animal('Leo', 7)
     const snoop = new Animal('Snoop', 10)
 ```
-这个工作的原因以及`this`为我们创建对象的原因是因为我们使用`new`关键字调用了构造函数。如果`new`在调用函数时停止，则this永远不会创建该对象，也不会隐式返回该对象。我们可以在下面的示例中看到这个问题。
-Again the reason this works and that the `this` object is created for us is because we called the constructor function with the `new` keyword. If you leave off `new` when you invoke the function, that `this` object never gets created nor does it get implicitly returned. We can see the issue with this in the example below.
+这个满足要求以及`this`为指向我们的创建对象的原因是因为我们使用`new`关键字调用了构造函数。如果在调用函数时不使用`new`，则this这个对象永远不会创建，也不会隐式返回。我们可以在下面的示例中看到这个问题。
 ```js
     function Animal (name, energy) {
       this.name = name
@@ -297,19 +297,14 @@ Again the reason this works and that the `this` object is created for us is beca
 
 如果JavaScript不是您的第一种编程语言，您可能会有点不安。
 
-> “WTF这个家伙只是重新创造了一个更糟糕的版本” - 你
+> “WTF，这个家伙只是重新创造了一个更糟糕的版本” - 你
 
-对于那些不熟悉的人，Class允许您为对象创建蓝图。然后，无论何时创建该类的实例，都会获得一个具有蓝图中定义的属性和方法的对象。
+对于那些不熟悉的人，使用Class（类）允许您为对象创建模板。然后，无论何时创建该类的实例，都会获得一个具有模板中定义的属性和方法的对象。
 
-听起来有点熟？这基本上就是我们对`Animal`上面的构造函数所做的。但是，class我们只使用常规的旧JavaScript函数重新创建相同的功能，而不是使用关键字。当然，它需要一些额外的工作以及一些关于JavaScript“引擎盖下”发生的事情的知识，但结果是一样的。
+听起来有点熟？这基本上就是我们对上面`Animal`的构造函数所做的。我们只是使用常规的旧JavaScript函数重新创建相同的功能，而不是使用关键字`class`。当然，它需要一些额外的工作以及一些关于JavaScript“后台”发生的事情的知识，但结果是一样的。
 
-这是个好消息。JavaScript不是一种死语言。它不断得到改进，并由[TC-39委员会](https://tylermcginnis.com/videos/ecmascript/)补充。这意味着即使JavaScript的初始版本不支持类，也没有理由将它们添加到官方规范中。事实上，这正是TC-39委员会所做的。2015年，发布了EcmaScript（官方JavaScript规范）6，支持Classes和`class`关键字。让我们看看`Animal`上面的构造函数如何使用新的类语法。
+这里有个好消息。JavaScript不是一种死语言。它不断得到改进，并由[TC-39委员会](https://tylermcginnis.com/videos/ecmascript/)补充。这意味着即使JavaScript的初始版本不支持类，也不影响后续将它们添加到官方规范中。事实上，这正是TC-39委员会所做的。2015年，发布了EcmaScript（官方JavaScript规范）6，支持Classes和`class`关键字。让我们看看`Animal`上面的构造函数如何使用新的类语法。
 
-For those unfamiliar, a Class allows you to create a blueprint for an object. Then whenever you create an instance of that Class, you get an object with the properties and methods defined in the blueprint.
-
-Sound familiar? That’s basically what we did with our `Animal` constructor function above. However, instead of using the `class` keyword, we just used a regular old JavaScript function to re-create the same functionality. Granted, it took a little extra work as well as some knowledge about what happens “under the hood” of JavaScript but the results are the same.
-
-Here’s the good news. JavaScript isn’t a dead language. It’s constantly being improved and added to by the [TC-39 committee](https://tylermcginnis.com/videos/ecmascript/). What that means is that even though the initial version of JavaScript didn’t support classes, there’s no reason they can’t be added to the official specification. In fact, that’s exactly what the TC-39 committee did. In 2015, EcmaScript (the official JavaScript specification) 6 was released with support for Classes and the `class` keyword. Let’s see how our `Animal` constructor function above would look like with the new class syntax.
 ```js
     class Animal {
       constructor(name, energy) {
@@ -337,39 +332,30 @@ Here’s the good news. JavaScript isn’t a dead language. It’s constantly be
 
 因此，如果这是创建类的新方法，为什么我们花了这么多时间来翻过旧的方式呢？之所以这样，是因为新的方式（使用`class`关键字）主要只是我们称之为伪古典模式的现有方式的“语法糖”。为了完全理解ES6类的便捷语法，首先必须理解伪古典模式。
 
-Pretty clean, right?
-
-So if this is the new way to create classes, why did we spend so much time going over the old way? The reason for that is because the new way (with the `class` keyword) is primarily just “syntactical sugar” over the existing way we’ve called the pseudoclassical pattern. In order to _fully_ understand the convenience syntax of ES6 classes, you first must understand the pseudoclassical pattern.
 
 * * *
-在这一点上，我们已经介绍了JavaScript原型的基础知识。本文的其余部分将致力于理解与其相关的其他“知识渊博”主题。在另一篇文章中，我们将看看如何利用这些基础知识并使用它们来理解继承在JavaScript中的工作原理。
-At this point we’ve covered the fundamentals of JavaScript’s prototype. The rest of this post will be dedicated to understanding other “good to know” topics related to it. In another post we’ll look at how we can take these fundamentals and use them to understand how inheritance works in JavaScript.
+在这一点上，我们已经介绍了JavaScript原型的基础知识。本文的其余部分将致力于理解与其相关的其他“幸好知道了这件事”主题。在另一篇文章中，我们将看看如何利用这些基础知识并使用它们来理解继承在JavaScript中的工作原理。
 
 * * *
 
 ### 数组方法
-我们在上面深入讨论了如果要在类的实例之间共享方法，您应该将这些方法放在类（或函数）原型上。如果我们看一Array下课，我们可以看到同样的模式。从历史上看，您可能已经创建了这样的数组
-We talked in depth above about how if you want to share methods across instances of a class, you should stick those methods on the class’ (or function’s) prototype. We can see this same pattern demonstrated if we look at the `Array` class. Historically you’ve probably created your arrays like this
+我们在上面深入讨论了如果要在类的实例之间共享方法，您应该将这些方法放在类（或函数）原型上。如果我们了解Array类型，我们可以看到同样的模式。从历史上看，您可能已经创建了这样的数组
 ```js
     const friends = []
 ```
-事实证明，创造一个类的new实例只是糖Array。
-Turns out that’s just sugar over creating a `new` instance of the `Array` class.
+事实证明，这是通过`new`创造一个`Array`类实例的语法糖。
+
 ```js
     const friendsWithSugar = []
 
     const friendsWithoutSugar = new Array()
 ```
-你可能从来没有想过一件事是怎样一个阵列的每个实例都具有所有这些内置的方法（splice，slice，pop等）？
+你可能从来没有想过一件事是怎样一个array的每个实例都具有所有这些内置的方法（`splice`，`slice`，`pop`等）？
 
-正如您现在所知，这是因为这些方法存在Array.prototype，当您创建新实例时Array，您使用new关键字将Array.prototype失败的查找设置为委托。
+正如您现在所知，这是因为这些方法存在`Array.prototype`，当您创建新实例时`Array`，您使用`new`关键字将`Array.prototype`失败的查找设置为委托。
 
-我们只需记录即可查看所有数组的方法Array.prototype。
-One thing you might have never thought about is how does every instance of an array have all of those built in methods (`splice`, `slice`, `pop`, etc)?
+我们可以通过查看`Array.prototype`简单的查看所有数组的方法。
 
-Well as you now know, it’s because those methods live on `Array.prototype` and when you create a new instance of `Array`, you use the `new` keyword which sets up that delegation to `Array.prototype` on failed lookups.
-
-We can see all the array’s methods by simply logging `Array.prototype`.
 ```js
     console.log(Array.prototype)
 
@@ -407,12 +393,12 @@ We can see all the array’s methods by simply logging `Array.prototype`.
       values: ƒn values()
     */
 ```
-对象也存在完全相同的逻辑。Alls对象将委托给Object.prototype失败的查找，这就是为什么所有对象都有类似toString和的方法hasOwnProperty。
-The exact same logic exists for Objects as well. Alls object will delegate to `Object.prototype` on failed lookups which is why all objects have methods like `toString` and `hasOwnProperty`.
+对象也存在完全相同的逻辑。所有的对象将失败的查找委托给Object.prototype，这就是为什么所有对象都有类似`toString`和`hasOwnProperty`的方法。
+
 
 ### 静态方法
-到目前为止，我们已经介绍了为什么以及如何在类的实例之间共享方法。但是，如果我们有一个对Class很重要但不需要跨实例共享的方法呢？例如，如果我们有一个函数接受一个Animal实例数组并确定下一个需要输入哪一个怎么办？我们称之为nextToEat。
-Up until this point we’ve covered the why and how of sharing methods between instances of a Class. However, what if we had a method that was important to the Class, but didn’t need to be shared across instances? For example, what if we had a function that took in an array of `Animal` instances and determined which one needed to be fed next? We’ll call it `nextToEat`.
+到目前为止，我们已经介绍了为什么以及如何在类的实例之间共享方法。但是，如果我们有一个对Class很重要但不需要跨实例共享的方法呢？例如，如果我们有一个函数接受一个`Animal`实例数组并确定下一个要被吃的的需求该怎么办？我们称之为`nextToEat`。
+
 ```js
     function nextToEat (animals) {
       const sortedByLeastEnergy = animals.sort((a,b) => {
@@ -422,8 +408,8 @@ Up until this point we’ve covered the why and how of sharing methods between i
       return sortedByLeastEnergy[0].name
     }
 ```
-这是没有意义有nextToEat现场直播Animal.prototype，因为我们不希望所有实例之间共享。相反，我们可以将其视为辅助方法。所以，如果nextToEat不应该活下去Animal.prototype，我们应该把它放在哪里？那么显而易见的答案是我们可以坚持nextToEat与我们Animal班级相同的范围，然后在我们正常需要时引用它。
-It doesn’t make sense to have `nextToEat` live on `Animal.prototype` since we don’t want to share it amongst all instances. Instead, we can think of it as more of a helper method. So if `nextToEat` shouldn’t live on `Animal.prototype`, where should we put it? Well the obvious answer is we could just stick `nextToEat` in the same scope as our `Animal` class then reference it when we need it as we normally would.
+这是没有意义有`nextToEat`依托于`Animal.prototype`，因为我们不希望所有实例之间共享。相反，我们可以将其视为辅助方法。所以，如果`nextToEat`不应该依托于`Animal.prototype`，我们应该把它放在哪里？那么显而易见的答案是我们可以把`nextToEat`与我们`Animal`类放到相同的范围，然后在我们正常需要时引用它。
+
 ```js
     class Animal {
       constructor(name, energy) {
@@ -458,9 +444,7 @@ It doesn’t make sense to have `nextToEat` live on `Animal.prototype` since we 
     console.log(nextToEat([leo, snoop])) // Leo
 ```
 现在这可行，但有更好的方法。
-Now this works, but there’s a better way.
-要有一个特定于类本身的方法，但不需要在该类的实例之间共享，就可以将其添加为static类的属性。
-> Whenever you have a method that is specific to a class itself, but doesn’t need to be shared across instances of that class, you can add it as a `static` property of the class.
+> 要有一个特定于类本身的方法，但不需要在该类的实例之间共享，就可以将其添加为static类的属性。
 
 ```js
     class Animal {
@@ -489,8 +473,8 @@ Now this works, but there’s a better way.
       }
     }
 ```
-现在，因为我们在类上添加nextToEat了一个static属性，它就存在于Animal类本身（而不是它的原型）上，可以使用它来访问Animal.nextToEat。
-Now, because we added `nextToEat` as a `static` property on the class, it lives on the `Animal` class itself (not its prototype) and can be accessed using `Animal.nextToEat`.
+现在，因为我们在类上添加`nextToEat`了一个`static`属性，它就存在于`Animal`类本身（而不是它的原型）上，可以使用它来访问`Animal.nextToEat`。
+
 ```js
     const leo = new Animal('Leo', 7)
     const snoop = new Animal('Snoop', 10)
@@ -499,7 +483,7 @@ Now, because we added `nextToEat` as a `static` property on the class, it lives 
 
 ```
 因为我们在这篇文章中都遵循了类似的模式，让我们来看看如何使用ES5完成同样的事情。在上面的例子中，我们看到了如何使用static关键字将方法直接放在类本身上。使用ES5，同样的模式就像手动将方法添加到函数对象一样简单。
-Because we’ve followed a similar pattern throughout this post, let’s take a look at how we would accomplish this same thing using ES5. In the example above we saw how using the `static` keyword would put the method directly onto the class itself. With ES5, this same pattern is as simple as just manually adding the method to the function object.
+
 ```js
     function Animal (name, energy) {
       this.name = name
@@ -535,8 +519,7 @@ Because we’ve followed a similar pattern throughout this post, let’s take a 
     console.log(Animal.nextToEat([leo, snoop])) // Leo
 ```
 ### 获取对象的原型
-无论您使用哪种模式创建对象，都可以使用该Object.getPrototypeOf方法完成获取该对象的原型。
-Regardless of whichever pattern you used to create an object, getting that object’s prototype can be accomplished using the `Object.getPrototypeOf` method.
+无论您使用哪种模式创建对象，都可以使用该`Object.getPrototypeOf`方法完成获取该对象的原型。
 ```js
     function Animal (name, energy) {
       this.name = name
@@ -568,14 +551,10 @@ Regardless of whichever pattern you used to create an object, getting that objec
 ```
 上面的代码有两个重要的要点。
 
-首先，你会发现，proto与4种方法的对象，constructor，eat，sleep，和play。这就说得通了。我们getPrototypeOf在实例中使用了传递，leo返回实例的原型，这是我们所有方法都存在的地方。这告诉我们还有一件事prototype我们还没有谈过。默认情况下，该prototype对象将具有一个constructor属性，该属性指向原始函数或创建实例的类。这也意味着因为JavaScript constructor默认情况下会在属性上放置一个属性，所以任何实例都可以通过它访问它们的构造函数instance.constructor。
+首先，你会发现，`proto`是以个含有4种方法的对象，`constructor`，`eat`，`sleep`，和`play`。这就说得通了。我们使用`getPrototypeOf`方法进入到实例，`leo`返回实例的原型，这是我们所有方法都存在的地方。这告诉我们还有一件事`prototype`我们还没有谈过。默认情况下，该`prototype`对象将具有一个`constructor`属性，该属性指向原始函数或创建实例的类。这也意味着因为JavaScript默认情况下会在属性上放置一个`constructor`属性，所以任何实例都可以通过`instance.constructor`它访问它们的构造函数。
 
-从上面得到的第二个重要内容是Object.getPrototypeOf(leo) === Animal.prototype。这也是有道理的。该Animal构造函数有一个原型属性，我们可以分享的所有实例的方法和getPrototypeOf让我们看到了实例本身的原型。
-There are two important takeaways from the code above.
+从上面得到的第二个重要内容是`Object.getPrototypeOf(leo) === Animal.prototype`。这也是有道理的。该`Animal`构造函数有一个原型属性，在那里我们可以分享的所有实例的方法和`getPrototypeOf`让我们看到了实例本身的原型。
 
-First, you’ll notice that `proto` is an object with 4 methods, `constructor`, `eat`, `sleep`, and `play`. That makes sense. We used `getPrototypeOf` passing in the instance, `leo` getting back that instances’ prototype, which is where all of our methods are living. This tells us one more thing about `prototype` as well that we haven’t talked about yet. By default, the `prototype` object will have a `constructor` property which points to the original function or the class that the instance was created from. What this also means is that because JavaScript puts a `constructor` property on the prototype by default, any instances will be able to access their constructor via `instance.constructor`.
-
-The second important takeaway from above is that `Object.getPrototypeOf(leo) === Animal.prototype`. That makes sense as well. The `Animal` constructor function has a prototype property where we can share methods across all instances and `getPrototypeOf` allows us to see the prototype of the instance itself.
 ```js
     function Animal (name, energy) {
       this.name = name
@@ -585,14 +564,14 @@ The second important takeaway from above is that `Object.getPrototypeOf(leo) ===
     const leo = new Animal('Leo', 7)
     console.log(leo.constructor) // Logs the constructor function
 ```
-为了配合我们之前讨论的内容Object.create，其工作原因是因为任何实例Animal都将委托给Animal.prototype失败的查找。因此，当您尝试访问时leo.prototype，leo没有prototype属性，因此它会将该查找委托给Animal.prototype确实具有constructor属性的查找。如果这一段没有意义，请回过头来阅读Object.create上述内容。
-To tie in what we talked about earlier with `Object.create`, the reason this works is because any instances of `Animal` are going to delegate to `Animal.prototype` on failed lookups. So when you try to access `leo.prototype`, `leo` doesn’t have a `prototype` property so it will delegate that lookup to `Animal.prototype` which indeed does have a `constructor` property. If this paragraph didn’t make sense, go back and read about `Object.create` above.
-您可能已经看过__proto__之前用于获取实例的原型。这是过去的遗物。相反，如上所述使用
-> You may have seen \_\_proto\_\_ used before to get an instances’ prototype. That’s a relic of the past. Instead, use **Object.getPrototypeOf(instance)** as we saw above.
+为了配合我们之前讨论的内容`Object.create`，其工作原因是因为任何实例`Animal`都将委托给`Animal.prototype`失败的查找。因此，当您尝试访问时`leo.prototype`，`leo`没有`prototype`属性，因此它会将该查找委托给`Animal.prototype`确实具有`constructor`属性的查找。如果这一段不太了解，请回过头来阅读`Object.create`上述内容。
+
+
+> 您可能已经看过__proto__之前用于获取实例的原型。这是过去的遗物。相反，如上所述使用**Object.getPrototypeOf(instance)**。
 
 ### 确定属性是否存在于原型上
-在某些情况下，您需要知道属性是否存在于实例本身上，还是存在于对象委托的原型上。我们可以通过循环遍历leo我们一直在创建的对象来看到这一点。假设目标是循环leo并记录其所有键和值。使用for in循环，可能看起来像这样。
-There are certain cases where you need to know if a property lives on the instance itself or if it lives on the prototype the object delegates to. We can see this in action by looping over our `leo` object we’ve been creating. Let’s say the goal was the loop over `leo` and log all of its keys and values. Using a `for in` loop, that would probably look like this.
+在某些情况下，您需要知道属性是否存在于实例本身上，还是存在于对象委托的原型上。我们可以通过循环遍历`leo`我们一直在创建的对象来看到这一点。假设目标是循环`leo`并记录其所有键和值。使用for in循环，可能看起来像这样。
+
 ```js
     function Animal (name, energy) {
       this.name = name
@@ -621,13 +600,12 @@ There are certain cases where you need to know if a property lives on the instan
     }
 ```
 你期望看到什么？最有可能的是，它是这样的
-What would you expect to see? Most likely, it was something like this -
 ```
     Key: name. Value: Leo
     Key: energy. Value: 7
 ```
 但是，如果你运行代码，你看到的是这个 -
-However, what you saw if you ran the code was this -
+
 ```
     Key: name. Value: Leo
     Key: energy. Value: 7
@@ -644,14 +622,11 @@ However, what you saw if you ran the code was this -
       this.energy -= length
     }
 ```
-这是为什么？一个for in循环将循环遍历对象本身以及它所委托的原型的所有可枚举属性。因为默认情况下将添加到函数的原型任何财产可枚举，我们不仅看到了name和energy，但我们也看到所有的原型方法- eat，sleep和play。要解决这个问题，我们需要指定所有原型方法都是不可枚举的，或者如果属性位于leo对象本身上，我们需要一种只有console.log的方法，而不是leo在失败的查找中委托给的原型。这是hasOwnProperty可以帮助我们的地方。
-
-hasOwnProperty是每个对象上的属性，它返回一个布尔值，指示对象是否具有指定的属性作为其自己的属性，而不是对象委托给的原型。这正是我们所需要的。现在有了这些新知识，我们可以修改我们的代码以利用循环hasOwnProperty内部的优势for in。
-
 ...
-Why is that? Well a `for in` loop is going to loop over all of the **enumerable properties** on both the object itself as well as the prototype it delegates to. Because by default any property you add to the function’s prototype is enumerable, we see not only `name` and `energy`, but we also see all the methods on the prototype - `eat`, `sleep`, and `play`. To fix this, we either need to specify that all of the prototype methods are non-enumerable **or** we need a way to only console.log if the property is on the `leo` object itself and not the prototype that `leo` delegates to on failed lookups. This is where `hasOwnProperty` can help us out.
+这是为什么？一个`for in`循环将循环遍历对象本身以及它所委托的原型的所有**可枚举属性**。因为默认情况下将添加到函数的原型任何属性可枚举，我们不仅看到了`name`和`energy`，但我们也看到所有的原型方法- `eat`，`sleep`和`play`。要解决这个问题，我们需要指定所有原型方法都是不可枚举的，或者如果属性位于leo对象本身上，我们需要一种只有console.log的方法，而不是leo在失败的查找中委托给的原型。这是`hasOwnProperty`可以帮助我们的地方。
 
-`hasOwnProperty` is a property on every object that returns a boolean indicating whether the object has the specified property as its own property rather than on the prototype the object delegates to. That’s exactly what we need. Now with this new knowledge we can modify our code to take advantage of `hasOwnProperty` inside of our `for in` loop.
+`hasOwnProperty`是每个对象上的属性，它返回一个布尔值，指示对象是否具有指定的属性作为其自己的属性，而不是对象委托给的原型。这正是我们所需要的。现在有了这些新知识，我们可以修改我们的代码以利用循环`hasOwnProperty`内部的优势`for in`。
+
 ```js
     ...
 
@@ -664,13 +639,11 @@ Why is that? Well a `for in` loop is going to loop over all of the **enumerable 
     }
 ```
 现在我们看到的只是leo对象本身的属性，而不是原型leo委托。
-And now what we see are only the properties that are on the `leo` object itself rather than on the prototype `leo` delegates to as well.
 ```
     Key: name. Value: Leo
     Key: energy. Value: 7
 ```
 如果你仍然有点困惑hasOwnProperty，这里有一些代码可以清除它。
-If you’re still a tad confused about `hasOwnProperty`, here is some code that may clear it up.
 ```js
     function Animal (name, energy) {
       this.name = name
@@ -701,13 +674,13 @@ If you’re still a tad confused about `hasOwnProperty`, here is some code that 
     leo.hasOwnProperty('play') // false
 ```
 ### 检查对象是否是类的实例
-有时您想知道对象是否是特定类的实例。为此，您可以使用 instanceof运算符。用例非常简单，但如果您以前从未见过它，实际的语法有点奇怪。它的工作原理如下
-Sometimes you want to know whether an object is an instance of a specific class. To do this, you can use the `instanceof` operator. The use case is pretty straight forward but the actual syntax is a bit weird if you’ve never seen it before. It works like this
+有时您想知道对象是否是特定类的实例。为此，您可以使用`instanceof`运算符。用例非常简单，但如果您以前从未见过它，实际的语法有点奇怪。它的工作原理如下
+
 ```
     object instanceof Class
 ```
-如果object是实例，则上述语句将返回true，否则返回Classfalse。回到我们的Animal例子，我们有类似的东西。
-The statement above will return true if `object` is an instance of `Class` and false if it isn’t. Going back to our `Animal` example we’d have something like this.
+如果`object`是`Class`的实例，则上述语句将返回true，否则返回false。回到我们的`Animal`例子，我们有类似的东西。
+
 ```js
     function Animal (name, energy) {
       this.name = name
@@ -721,12 +694,11 @@ The statement above will return true if `object` is an instance of `Class` and f
     leo instanceof Animal // true
     leo instanceof User // false
 ```
-它的instanceof工作方式是检查constructor.prototype对象原型链中是否存在。在上面的例子中，leo instanceof Animal是true因为Object.getPrototypeOf(leo) === Animal.prototype。另外，leo instanceof User是false因为Object.getPrototypeOf(leo) !== User.prototype。
-The way that `instanceof` works is it checks for the presence of `constructor.prototype` in the object’s prototype chain. In the example above, `leo instanceof Animal` is `true` because `Object.getPrototypeOf(leo) === Animal.prototype`. In addition, `leo instanceof User` is `false` because `Object.getPrototypeOf(leo) !== User.prototype`.
+它的`instanceof`工作方式是检查`constructor.prototype`对象原型链中是否存在。在上面的例子中，`leo instanceof Animal`是true因为`Object.getPrototypeOf(leo) === Animal.prototype`。另外，`leo instanceof User`是false因为`Object.getPrototypeOf(leo) !== User.prototype`。
+
 
 ### 创建新的不可知构造函数
 你能发现下面代码中的错误吗？
-Can you spot the error in the code below?
 ```js
     function Animal (name, energy) {
       this.name = name
@@ -735,12 +707,10 @@ Can you spot the error in the code below?
 
     const leo = Animal('Leo', 7)
 ```
-即使是经验丰富的JavaScript开发人员有时也会因为上面的例子而被绊倒。因为我们正在使用pseudoclassical pattern我们之前学到的东西，所以当Animal调用构造函数时，我们需要确保使用new关键字调用它。如果我们不这样做，那么this关键字将不会被创建，也不会被隐式返回。
+即使是经验丰富的JavaScript开发人员有时也会因为上面的例子而被绊倒。因为我们正在使用我们之前学到的`pseudoclassical pattern`，所以当`Animal`调用构造函数时，我们需要确保使用new关键字调用它。如果我们不这样做，那么this关键字将不会被创建，也不会被隐式返回。
 
 作为复习，注释掉的行是new在函数上使用关键字时幕后发生的事情。
-Even seasoned JavaScript developers will sometimes get tripped up on the example above. Because we’re using the `pseudoclassical pattern` that we learned about earlier, when the `Animal` constructor function is invoked, we need to make sure we invoke it with the `new` keyword. If we don’t, then the `this` keyword won’t be created and it also won’t be implicitly returned.
 
-As a refresher, the commented out lines are what happens behind the scenes when you use the `new` keyword on a function.
 ```js
     function Animal (name, energy) {
       // const this = Object.create(Animal.prototype)
@@ -751,12 +721,10 @@ As a refresher, the commented out lines are what happens behind the scenes when 
       // return this
     }
 ```
-这似乎是一个非常重要的细节，让其他开发人员记住。假设我们正在与其他开发人员合作，我们是否有办法确保Animal始终使用new关键字调用构造函数？事实证明，这是通过使用instanceof我们之前学到的操作员来实现的。
+这似乎是一个非常重要的细节，让其他开发人员记住。假设我们正在与其他开发人员合作，我们是否有办法确保`Animal`始终使用new关键字调用构造函数？事实证明，这是通过使用我们之前学到的`instanceof`操作来实现的。
 
-如果使用new关键字调用构造函数this，instanceof那么构造函数体内部将是构造函数本身。那是很多大话。这是一些代码。
-This seems like too important of a detail to leave up to other developers to remember. Assuming we’re working on a team with other developers, is there a way we could ensure that our `Animal` constructor is always invoked with the `new` keyword? Turns out there is and it’s by using the `instanceof` operator we learned about previously.
+如果使用`new`关键字调用构造函数，那么构造函数体内部的`this`将是`instanceof`构造函数本身。这里可以聊很多。这是一些代码。
 
-If the constructor was called with the `new` keyword, then `this` inside of the body of the constructor will be an `instanceof` the constructor function itself. That was a lot of big words. Here’s some code.
 ```js
     function Animal (name, energy) {
       if (this instanceof Animal === false) {
@@ -768,7 +736,6 @@ If the constructor was called with the `new` keyword, then `this` inside of the 
     }
 ```
 现在不是仅仅向函数的使用者记录警告，如果我们重新调用该函数，但是这次使用new关键字怎么办？
-Now instead of just logging a warning to the consumer of the function, what if we re-invoke the function, but with the `new` keyword this time?
 ```js
     function Animal (name, energy) {
       if (this instanceof Animal === false) {
@@ -779,24 +746,16 @@ Now instead of just logging a warning to the consumer of the function, what if w
       this.energy = energy
     }
 ```
-现在无论是否Animal使用new关键字调用它，它仍然可以正常工作。
-Now regardless of if `Animal` is invoked with the `new` keyword, it’ll still work properly.
+现在无论是否`Animal`使用`new`关键字调用它，它仍然可以正常工作。
 
 ### 重新创建Object.create
 在这篇文章中，我们非常依赖于Object.create创建委托给构造函数原型的对象。此时，您应该知道如何Object.create在代码中使用，但有一件事您可能没有想到的是Object.create实际上是如何工作的。为了让你真正了解它是如何Object.create工作的，我们将自己重新创建它。首先，我们对如何Object.create运作了解多少？
 
-它接受一个对象的参数。
-它创建一个对象，该对象在失败的查找中委托给参数对象。
-它返回新创建的对象。
+1.  它接受一个类型为对象的参数。
+2.  它创建一个对象，该对象在失败的查找中委托给参数对象。
+3.  它返回新创建的对象。.
+
 让我们从＃1开始吧。
-
-Throughout this post we’ve relied heavily upon `Object.create` in order to create objects which delegate to the constructor function’s prototype. At this point, you should know how to use `Object.create` inside of your code but one thing that you might not have thought of is how `Object.create` actually works under the hood. In order for you to **really** understand how `Object.create` works, we’re going to re-create it ourselves. First, what do we know about how `Object.create` works?
-
-1.  It takes in an argument that is an object.
-2.  It creates an object that delegates to the argument object on failed lookups.
-3.  It returns the new created object.
-
-Let’s start off with #1.
 ```js
     Object.create = function (objToDelegateTo) {
 
@@ -805,9 +764,8 @@ Let’s start off with #1.
 很简单。
 
 现在＃2 - 我们需要创建一个对象，该对象将在失败的查找中委托给参数对象。这个有点棘手。为此，我们将使用我们对new关键字和原型如何在JavaScript中工作的知识。首先，在我们Object.create实现的主体内部，我们将创建一个空函数。然后，我们将该空函数的原型设置为等于参数对象。然后，为了创建一个新对象，我们将使用new关键字调用我们的空函数。如果我们返回新创建的对象，那么它也将完成＃3。
-Simple enough.
 
-Now #2 - we need to create an object that will delegate to the argument object on failed lookups. This one is a little more tricky. To do this, we’ll use our knowledge of how the `new` keyword and prototypes work in JavaScript. First, inside the body of our `Object.create` implementation, we’ll create an empty function. Then, we’ll set the prototype of that empty function equal to the argument object. Then, in order to create a new object, we’ll invoke our empty function using the `new` keyword. If we return that newly created object, that’ll finish #3 as well.
+
 ```js
     Object.create = function (objToDelegateTo) {
       function Fn(){}
@@ -815,25 +773,22 @@ Now #2 - we need to create an object that will delegate to the argument object o
       return new Fn()
     }
 ```
-野生。让我们来看看吧。
+让我们来看看吧。
 
 当我们创建一个新函数时，Fn在上面的代码中，它带有一个prototype属性。当我们用new关键字调用它时，我们知道我们将得到的是一个对象，它将在失败的查找中委托给函数的原型。如果我们覆盖函数的原型，那么我们可以决定在失败的查找中委托哪个对象。因此，在我们上面的示例中，我们Fn使用Object.create调用时传入的对象覆盖原型objToDelegateTo。
-Wild. Let’s walk through it.
 
-When we create a new function, `Fn` in the code above, it comes with a `prototype` property. When we invoke it with the `new` keyword, we know what we’ll get back is an object that will delegate to the function’s prototype on failed lookups. If we override the function’s prototype, then we can decide which object to delegate to on failed lookups. So in our example above, we override `Fn`’s prototype with the object that was passed in when `Object.create` was invoked which we call `objToDelegateTo`.
-请注意，我们只支持Object.create的单个参数。官方实现还支持第二个可选参数，该参数允许您向创建的对象添加更多属性。
-> Note that we’re only supporting a single argument to Object.create. The official implementation also supports a second, optional argument which allow you to add more properties to the created object.
+> 请注意，我们只支持Object.create的单个参数。官方实现还支持第二个可选参数，该参数允许您向创建的对象添加更多属性。
 
 ### 箭头 Functions
 箭头函数没有自己的this关键字。因此，箭头函数不能是构造函数，如果您尝试使用new关键字调用箭头函数，它将抛出错误。
-Arrow functions don’t have their own `this` keyword. As a result, arrow functions can’t be constructor functions and if you try to invoke an arrow function with the `new` keyword, it’ll throw an error.
+
 ```js
     const Animal = () => {}
 
     const leo = new Animal() // Error: Animal is not a constructor
 ```
-另外，因为我们在上面说明了伪古典图案不能与箭头函数一起使用，所以箭头函数也没有prototype属性。
-Also, because we demonstrated above that the pseudoclassical pattern can’t be used with arrow functions, arrow functions also don’t have a `prototype` property.
+另外，因为我们在上面说明了pseudoclassical pattern不能与箭头函数一起使用，所以箭头函数也没有prototype属性。
+
 ```js
     const Animal = () => {}
     console.log(Animal.prototype) // undefined
