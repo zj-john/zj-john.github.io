@@ -1,14 +1,16 @@
 ---
-title: TypeScript 3.1 RC上线【译】
+title: TypeScript 3.1 RC上线
 categories:
   - notes
+  - typescript
+  - 2018.09.14
 tags:
   - JavaScript Weekly
 toc: true
 date: 2018-09-17 20:12:01
 ---
 
-今天[2018-09-13]，我们很高兴地宣布TypeScript 3.1的候选版本（RC）可用了。发布RC的目的是为了收集任何意见和建议，以便确保我们正式版本的发布尽可能顺利。
+2018-09-13日，我们很高兴地宣布TypeScript 3.1的候选版本（RC）可用了。发布RC的目的是为了收集任何意见和建议，以便确保我们正式版本的发布尽可能顺利。
 
 如果您现在想试一试，可以通过[NuGet](https://www.nuget.org/packages/Microsoft.TypeScript.MSBuild)获取RC ，或使用以下命令使用npm：
 
@@ -242,5 +244,5 @@ function foo(x: unknown | (() => string)) {
 
 我们期待听到您对RC的体验。与往常一样，请密切关注[我们的路线图](https://github.com/Microsoft/TypeScript/wiki/Roadmap)，以便在我们稳定时全面了解发布情况。我们希望在短短几周内发布我们的最终版本，所以现在就试试吧！
 
-## 原文地址
-https://blogs.msdn.microsoft.com/typescript/2018/09/13/announcing-typescript-3-1-rc/
+## 链接
+* 原文 https://blogs.msdn.microsoft.com/typescript/2018/09/13/announcing-typescript-3-1-rc/
