@@ -49,8 +49,7 @@ date: 2018-10-11 15:48:15
 
 ### constructor()
 
->必须始终在理想情况下声明构造函数，并将任何参数传递给父级。
-> A constructor must always be ideally declared and any parameters passed to the parent also.
+>理论上，构造函数必须声明，并将接收到的所有参数传递给父级。
 
 理想情况下，构造函数中通常会绑定所有的事件侦听器，例如：
 ```js
@@ -76,30 +75,25 @@ date: 2018-10-11 15:48:15
 
 例如，如果我们在DOM树中的删除该节点或其父节点，则此函数将触发。
 
-在`disconnectedCallback()`当元素上的文件或在新页面的其他地方也采用了运行。
-The `disconnectedCallback()` will also run when the element is adopted elsewhere on the document or in a new page.
+当自定义元素在文档或在新页面的其他地方采用时，`disconnectedCallback()`也会运行。
 
 ### adoptedCallback()
 
-每次将自定义元素移动到新文档时调用。
-> Invoked each time the custom element is moved to a new document.
+> 每次将自定义元素移动到新文档时调用。
 
-如果将自定义元素移动到新页面或文档，则将触发此回调。
+如果将自定义元素移动到新页面或文档，则将触发此回调。（当前没有API可以直接调用此函数的，因为已有的Dom的操作都是先删后增，不存在直接移动的情况）
 
 ### attributeChangedCallback(attrName, oldVal, newVal)
 
 >添加，删除，更新或替换元素的属性时会发生此行为。
 
-只要当前正在观察更改的属性，即只将组件上的属性更改为HOWEVER，则会触发此函数`observedAttributes()`。
-This function is fired whenever an attribute on the component is changed HOWEVER, only if the attribute that changed is currently being observed, which brings us to the `observedAttributes()`.
+组件上的任意属性变化，都会触发此函数。但是，只有当被处于观察状态的属性发生变化时，才会触发`observedAttributes()`。
 
 ### observedAttributes()
 
-我们实际想要观察的自定义元素的属性会发生变化
-> Attributes of the custom element we actually want to observe changes upon
+>自定义元素中被观察的属性发生变化时触发
 
-正如你所看到的，这个方法被声明为`static get observedAttributes()`，这明显不同于其他方法声明，这是因为我们希望它不被任何子类/组件继承，我们只想声明它只引用一次，注意，它是`static`（设置为所有继承人和自己）和`get`表（供参考）。
-As you can see, this method is declared as `static get observedAttributes()` and this clearly differs from other method declarations, this is because we want it inherited by any sub classes/components and we want to declare it only once to reference, heed, it is `static` (set for all inheritors and itself) and `get`table (for reference).
+正如你所看到的，这个方法被声明为`static get observedAttributes()`，这明显不同于其他方法声明，这是因为我们希望它不被任何子类/组件继承，我们只想在引用它的时候声明一次，注意，它是`static`和`get`方式（供参考）。
 
 此函数应返回一个字符串数组，其中每个字符串都是您要观察的属性的名称，例如：
 ```js
