@@ -95,10 +95,6 @@ Cardie是一个简单的应用程序。它所做的就是显示用户的个人�
 
 在Cardie中，`App`组件通过`react-redux`的`connect`函数连接到redux store。从store中，它接收到这些属性：`name`, `location`, `likes` 和 `description`。
 
-Let me show you what I mean.
-
-In Cardie, the `App` component is connected to the redux store via the `connect` function from `react-redux`. From the store, it receives the props: `name`, `location`, `likes` and `description`.
-
 ![<App/> receives the props it needs directly from the redux store.](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1_EQLJ8lXEchp_USFfj2Em7A.png)
 
 
@@ -133,7 +129,7 @@ In Cardie, the `App` component is connected to the redux store via the `connect`
 
 ![The profession will now be retrieved directly from the redux store by the <Profession/> component.](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1_tLbbgUgBavBm6FMpOzqL7Q.png)
 
-无论你是否使用`redux`，这里的要点是`App`不再由于`profession`属性的变化而重新渲染，但<Profession/>组件将是。
+无论你是否使用`redux`，这里的要点是`App`不再由于`profession`属性的变化而重新渲染，但`<Profession/>`组件将是。
 
 ![Note how the highlighted updates is contained within <Profession />](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1_Poo-6-5-bfYQ0qYBcXoyiw.gif)
 
@@ -145,8 +141,7 @@ In Cardie, the `App` component is connected to the redux store via the `connect`
 
 但是，什么情况下需要使用[纯组件](https://reactjs.org/docs/react-api.html#reactpurecomponent)呢？
 
-理论上，你可以把每个组件都变成纯组件，但是请记住，为什么不是开箱即用的原因。因此`shouldComponentUpdate`功能。
-Well, it is true that you could make every component a pure component, but remember there’s a reason why that isn’t the case out of the box. Hence the`shouldComponentUpdate` function.
+理论上，你可以把每个组件都变成纯组件，但是请记住，使用了`shouldComponentUpdate`函数的组件不在情况之列。
 
 成为纯组件的前提是，当且仅当组件的`props`与先前的props和state不同时，组件才重新渲染。
 
@@ -155,12 +150,10 @@ Well, it is true that you could make every component a pure component, but remem
 ![Using React.PureComponent as opposed to React.Component](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1_VrdjOEthHOb6MWxE6lDc0A.png)
 
 
-为了说明 _Cardie_ 中的这个特定用例，让我们将`Profession`组件的渲染元素分解为更小的组件。
+针对 _Cardie_ 的特定情况，让我们将`Profession`组件的渲染元素分解为更小的组件。
 
-所以，这是Profession之前的内容：
-To illustrate this specific use case in _Cardie_, let’s break down the render elements of the `Profession` component into smaller components.
+所以，这是`Profession`之前的内容：
 
-So, this was the content of `Profession` before now:
 ```js
     const Description = ({ description }) => {
       return (
@@ -170,8 +163,7 @@ So, this was the content of `Profession` before now:
       );
     }
 ```
-以下是我们将其更改为：
-Here’s what we’ll change it to:
+然后我们将其更改为：
 ```js
     const Description = ({ description }) => {
       return (
@@ -184,124 +176,88 @@ Here’s what we’ll change it to:
       );
     };
 ```
-现在，该Description组件呈现4个子组件。
-Now, the `Description` component renders 4 children components.
+现在，该`Description`组件涵盖了4个子组件。
 
 ![](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1_TpXci0NJ24imQqmsc7S-_A.png)
 
-请注意，Description组件接受professionprop。但是，它将此prop传递给Profession组件。从技术上讲，其他3个组件都不关心这个profession道具。
+请注意，`Description`组件接收`profession`属性。然后，它只将此属性传递给`Profession`组件。所以从技术上讲，其他3个组件都不关心这个`profession`属性。
 
-这些新组件的内容非常简单。例如，<I />组件只返回span带有“I”文本的元素：span >I </span>
+这些新组件的内容非常简单。例如，`<I />`组件只返回带有“I”文本的`span`元素：`<span >I </span>`
 
-如果应用程序运行，结果是一样的。该应用程序工作。
+运行一下，结果正常。
 
-有趣的是，在改变description道具时，每个儿童成分Profession也会被重新渲染。
-Note that the Description component takes in a `profession` prop. However, it passes on this prop to the `Profession` component. Technically, none of the other 3 components care about this `profession` prop.
-
-The contents of these new components are super simple. For example, the `<I />` component just returns a `span` element with an “I” text: `span >I </span>`
-
-If the application runs, the result is just the same. The app works.
-
-What’s interesting is that upon a change to the `description` prop, every child component of `Profession` is also re-rendered.
+有趣的是，在改变`description`属性时，每个`Description`的子组件也会被重新渲染。
 
 ![Once a new prop value is passed into the Description component, all the child components also re-render.](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1_LDQJckpn733R8cgflYTRSg.png)
 
 
-我在render每个子组件的方法中添加了一些日志- 正如您所看到的，它们确实都被重新渲染。
-I added a few logs in the `render` methods of each child component - and as you can see they were indeed all re-rendered.
+我在每个子组件的`render`方法中添加了一些日志- 正如您所看到的，它们确实都被重新渲染。
 
 ![](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1_s4r-atPSx7F_tKLFj5v-gg.png)
 
-您还可以使用react开发工具查看突出显示的更新。
-You may also view the highlighted updates using the react dev tools.
+您还可以使用react开发工具高亮显示更新的部分。
 
 ![Note how there are green flashes around each of the words, I, am and a.](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1_34bdT5PCFRmwTpmgo7qZPw.gif)
 
+这个结果是可以解释的。当组件`props`或`state` 更改时，它呈现的元素树将被重新计算，即重新渲染。
 
-此行为是预期的。每当组件具有props或state更改时，它呈现的元素树将被重新计算。这与重新渲染同义。
+在这个特定的例子中，我们都知道`<I/>`, `<Am/>` 和 `<A/>`子组件被重新渲染是完全没有意义的，虽然，`<Description/>`中的`props`确实更改了。试想，如果这是一个足够大的应用程序，则此行为可能会造成一些性能威胁。
 
-在这个特定的例子中，你会同意我的意见，如果真的没有意义<I/>，<Am/>并且<A/>子组件要重新渲染。是的，props父元素中的元素已<Description/> 更改，但如果这是一个足够大的应用程序，则此行为可能会造成一些性能威胁。
+如果我们将这些子组件转换为纯组件，情况会不会好一点呢？
 
-如果我们将这些子组件制成纯组件怎么办？
+考虑`<I/>`组件：
 
-考虑<I/>组件：
-This behavior is expected. Whenever a component has either `props` or `state` changed, the tree of elements it renders is recomputed. This is synonymous to a re-render.
-
-In this particular example, you’ll agree with me that if really makes no sense for `<I/>`, `<Am/>` and `<A/>` child components to be re-rendered. Yes, the `props` in the parent element, `<Description/>`  changed, but if this were a sufficiently large application, this behaviour may pose some performance threats.
-
-What if we made these child components pure components?
-
-Consider the `<I/>` component:
-
-```
+```js
   import React, {Component, PureComponent} from "react"
 
-    //before
-    class I extends Component {
-      render() {
-        return <span className="faint">I </span>;
-    }
+  //before
+  class I extends Component {
+    render() {
+      return <span className="faint">I </span>
+    };
+  }
 
-    //after
-    class I extends PureComponent {
-      render() {
-        return <span className="faint">I </span>;
-    }
+  //after
+  class I extends PureComponent {
+    render() {
+      return <span className="faint">I </span>
+    };
+  }
 
 ```
 
-通过暗示，在引擎盖下通知React，这样如果这些子组件的prop值没有改变，就不需要重新渲染它们。
+通过这种写法，等同于在后台通知React：这样如果这些子组件的prop值没有改变，就不需要重新渲染它们。
 
-是的，即使父元素的道具发生了变化，也不要重新渲染它们！
-By implication, React is informed under the hood so that if the prop values for these child components aren’t changed, there’s no need to re-render them.
-
-Yes, do not re-render them even when the parent element has a change in its props!
+是的，即使父元素的属性发生了变化，也不要重新渲染它们！
 
 ![](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1_ETCitcco6c-lSIm5Fbfu0w.png)
 
-在重构后检查突出显示的更新时，您可以看到不再重新呈现子组件。只是重新渲染实际更改的Profession组件prop。
-Upon inspecting the highlighted updates after the refactor, you can see that the child components are no longer re-rendered. Just the `Profession` component whose `prop` actually changes is re-rendered.
+在重构后，您可以看到其它子组件不再重新渲染了。只重新渲染了实际更改的`prop`的`Profession`组件。
 
 ![There are no flashes around the words, “I”, “am” and “a”. Just the overall container, and the profession flashes.](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1*UK66j52zr2ezTDhTLtZWGg.gif)
 
 在更大的应用程序中，您可以通过仅使某些组件成为纯组件来发现巨大的性能优化。
 
-要查看代码更改，请参阅repo中的pure-component分支。
+要查看代码更改，请参阅repo中的[pure-component branch](https://github.com/ohansemmanuel/Cardie-performace/tree/pure-components)分支。
 
-In a larger application, you may find immense performance optimizations by just making certain components pure components.
-
-To view the code change, please see the [pure-component branch](https://github.com/ohansemmanuel/Cardie-performace/tree/pure-components) from the repo.
-
-### 4\. Avoid passing new objects as props 避免将新对象作为道具传递
-再次记住，只要props组件发生变化，就会发生重新渲染。
-Remember again that whenever the `props` for a component changes, a re-render happens.
+### 4\. 避免将新对象作为属性传递
+再次记住，只要`props`发生变化，组件就会发生重新渲染。
 
 ![If the props or state values changes, the tree of elements is re-rendered. This results in a new element tree.](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1_EpSSnv8Wjql-IcrNvzvz_A.png)
 
+如果您的组件`props`没有改变但React认为它确实改变了怎么办？
 
-如果props您的组件没有改变但React认为它确实改变了怎么办？
-
-好吧，还有一个重新渲染！
+好吧，这也会导致一次重新渲染！
 
 但这不是很奇怪吗？
 
-这种看似奇怪的行为是因为Javascript如何工作以及React如何处理旧的和新的prop值之间的比较而发生的。
+这种看似奇怪的行为是因为Javascript的工作原理以及React如何处理新老prop值之间的比较而发生的。
 
 让我举个例子。
 
-这是Description组件的内容：
-What if the `props` for your component didn’t change but React thinks it did change?
+这是`Description`组件的内容：
 
-Well, there’ll also be a re-render!
-
-But isn’t that weird?
-
-This seemingly weird behavior happens because of how Javascript works & how React handles its comparison between old and new prop values.
-
-Let me show you an example.
-
-Here’s the content for the `Description` component:
-```
+```js
     const Description = ({ description }) => {
       return (
     	<p>
@@ -313,25 +269,22 @@ Here’s the content for the `Description` component:
       );
     };
 ```
-现在，我们将重构该I组件以获取某个i道具。这将是以下形式的对象：
-Now, we will refactor the `I` component to take in a certain `i` prop. This will be an object of the form:
-```
+现在，我们将重构该`I`组件,使他需要一个确定的`i`属性。i是如下形式的对象：
+```js
     const i = {
       value: "i"
     };
 ```
-无论存在什么值属性，i都将设置为I组件中的值。
-Whatever value property is present in `i` will be set as the value in the `I`component.
-```
+无论`i`是什么值，都将传递给`I`组件并显示。
+```js
     class I extends PureComponent {
       render() {
         return <span className="faint">{this.props.i.value} </span>;
       }
     }
 ```
-在Description组件中，iprop被创建并传入，如下所示：
-In the `Description` component, the `i` prop is created and passed in as shown below:
-```
+在`Description`组件中，`i`属性被创建并传入，如下所示：
+```js
     class Description extends Component {
       render() {
     	const i = {
@@ -339,7 +292,7 @@ In the `Description` component, the `i` prop is created and passed in as shown b
     	};
     	return (
     	  <p>
-                <I i={i} />
+          <I i={i} />
     	    <Am />
     	    <A />
     	    <Profession profession={this.props.description} />
@@ -348,69 +301,42 @@ In the `Description` component, the `i` prop is created and passed in as shown b
       }
     }
 ```
-当我解释这个时，请耐心等待。
+我会花点时间解释这个。
 
-这是完全正确的代码，它工作正常 - 但有一个问题。
+这是完全正确的代码，它也工作正常 - 但有一个问题。
 
-即使I是纯粹的组件，现在只要用户的职业发生变化，它就会重新呈现！
-Bear with me while I explain this.
-
-This is perfectly correct code, and it works fine — but there is one problem.
-
-Even though `I` is a pure component, now it re-renders whenever the profession of the user is changed!
+即使`I`是纯组件，但只要用户的职业发生变化，它就会重新渲染！
 
 ![On Clicking the button, the logs show that both <I/> and <Profession/> are re-rendered. Remember there’s been no actual props change in <I/>. Why the re-render?](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1*NymA8dLgtXQIHhk7AI2LzQ.png)
 
 
-但为什么？
+这是为什么？
 
-一旦Description组件接收新的道具，render函数被调用来创建它的元素树。
+一旦`Description`组件接收新的属性，`render`函数就被调用来创建它的元素树。
 
-在调用render函数时，它会创建一个新的i常量：
-But why?
-
-As soon as the `Description` component receives the new props, the `render`function is called to create its element tree.
-
-Upon invoking the render function it creates a new `i` constant:
-```
+在调用render函数时，它会创建一个新的`i`常量：
+```js
     const i = {
       value: "i"
     };
 ```
-当React得到评估线时 <I i={i} />，它会将道具i视为不同的道具，一个新对象 - 因此重新渲染。
+当React评估`<I i={i} />`这行代码时，它会将属性`i`视为不同的属性，一个新对象 - 因此重新渲染。
 
-如果你记得React 101，React会对前一个和下一个道具进行浅层比较。
+React会对上一个和下一个属性进行浅层比较。
 
-标量值（如字符串和数字）按值进行比较。通过引用比较对象。
+即标量值（如字符串和数字）按值进行比较。对象通过引用比较。
 
-通过暗示，即使常量i在重新渲染之间具有相同的值，参考也不相同。记忆中的位置不是。
+也就是说，即使常量`i`在重新渲染之间具有相同的值，但它们的引用也不相同，因为在内存中的地址变了。
 
-它是每个渲染调用的新创建的对象。因此，prop传递给的值<I/>被视为“新”，因此重新渲染。
+所以，每次渲染时都会新创建对象。因此，`prop`传递给`<I/>`的值被视为“新”，因此重新渲染。
 
-在更大的应用程序中，这可能会导致浪费的渲染和潜在的性能缺陷。
+在大型应用程序中，这可能会导致渲染浪费和潜在的性能缺陷。
 
 避免这样做。
 
-这适用于每个prop包括事件处理程序。
+这适用于每个`prop`包括事件处理程序。
 
 如果你可以避免它，你不应该这样做：
-When React gets to evaluate the line, `<I i={i} />`, it sees the props `i` as a different prop, a new object — therefore the re-render.
-
-If you remember from React 101, React does a shallow comparison between the previous and next props.
-
-Scalar values such as strings and numbers are compared by value. Objects are compared by reference.
-
-By implication, even though the constant `i` has the same value across re-renders, the reference is not the same. The position in memory isn’t.
-
-It’s a newly created object with every single render call. For this reason, the `prop` value passed to `<I/>` is regarded as “new”, consequently a re-render.
-
-In bigger applications, this can lead to a wasted render, and potential performance pitfalls.
-
-Avoid this.
-
-This applies to every `prop` including event handlers.
-
-If you can avoid it, you shouldn’t do this:
 ```
     ...
     render() {
@@ -418,8 +344,7 @@ If you can avoid it, you shouldn’t do this:
     }
     ...
 ```
-您每次在渲染中创建一个新的函数对象。这样做更好：
-You’re creating a new function object every time within render. Better do this:
+因为，您每次在渲染中创建一个新的函数对象。下面这样做更好：
 ```
     ...
     handleClick:() ={
@@ -429,13 +354,10 @@ You’re creating a new function object every time within render. Better do this
     }
     ...
 ```
-了解？
+了解了吗？
 
-同样，我们可以重构发送到的道具<I />，如下所示：
-Got that?
-
-In the same vein, we may refactor the prop sent to `<I />` as shown below:
-```
+同样，我们可以重构`<I />`中传入属性的方式，如下所示：
+```js
     class Description extends Component {
       i = {
         value: "i"
@@ -452,75 +374,49 @@ In the same vein, we may refactor the prop sent to `<I />` as shown below:
       }
     }
 ```
-现在，引用总是一样的this.i。
+现在，引用总是一样的，都是`this.i`。
 
-在渲染时不会创建新对象。
+在渲染时也不会创建新对象。
 
-要查看代码更改，请从repo中查看new-objects分支。
-Now, the reference is always the same, `this.i`.
+要查看代码更改，请从repo中查看[new-objects branch](https://github.com/ohansemmanuel/Cardie-performace/tree/new-objects)分支。
 
-A new object isn’t created at render time.
-
-To view the code change, please see the [new-objects branch](https://github.com/ohansemmanuel/Cardie-performace/tree/new-objects) from the repo.
-
-### 5\. Use the production build 使用生产版本
+### 5\. 使用生产版本
 部署到生产时，始终使用生产构建。这是一个非常简单但很棒的做法。
-When deploying to production, always use the production build. This is a very simple, but great practice.
 
 ![The “development build” warning you get with the react devtools in development.](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1*gHK6-tjRML2CA7fquzH6CQ.png)
 
+如果您已经使用`create-react-app`引导您的应用，运行生产版本请使用以下命令：`npm run build`。
 
-如果您已经使用create-react-app，以运行生产版本来引导您的应用程序，请使用以下命令：npm run build。
+这将生成用于生产的优化的打包文件。
 
-这将产生用于生产的捆绑优化文件。
-If you have bootstrapped your application with `create-react-app` , to run the production build, use the command: `npm run build`.
+### 6\. 使用代码拆分
+打包应用程序时，您可能将整个应用程序打包在一个大块中。
 
-This will yield bundle optimized files for production.
-
-### 6\. Employ code splitting 使用代码拆分
-捆绑应用程序时，您可能将整个应用程序捆绑在一个大块中。
-
-这个问题是随着你的应用程序的增长，捆绑包也是如此。
-When you bundle your application, you likely have the entire application bundled in one large chunk.
-
-The problem with this is that as your app grows, so does the bundle.
+这个问题是随着你的应用程序的增长，打的包也会越来越大。
 
 ![Once the user visits the site, he is sent a large chunk of code for the entire app.](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1*sJpQeFIkxgEQxGKW1ov6JA.png)
 
 
-代码拆分主张不是一次将大块代码发送给用户，而是在需要时动态地向用户发送块。
+代码拆分主张不是一次将大块代码直接发送给用户，而是在需要时动态地向用户发送。
 
 一个常见的例子是基于路由的代码拆分。在此方法中，代码根据应用程序中的路由拆分为块。
-Code splitting advocates that instead of sending this large chunk of code to the user at once, you may dynamically send chunks to the user when they need it.
-
-A common example is with route based code splitting. In this method, the code is split into chunks based on the routes in the application.
 
 ![The /home route gets a small chunk of code, so does the /about route.](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/1_VH5tRBxSSUrPAjf93CCqJw.png)
 
 
-另一种方法是基于组件的代码分割。在此方法中，如果当前未向用户显示组件，则可能会延迟其代码被发送给用户。
+另一种方法是基于组件的代码分割。在此方法中，如果当前组件未显示，则可能会把其代码延迟发送给用户。
 
 无论您坚持哪种方法，都必须了解权衡因素并且不会降低应用程序的用户体验。
 
 代码拆分很棒，它可以提高应用程序的性能。
 
-我采用了一种概念性的方法来解释代码分裂。如果您需要更多技术支持，请查看官方的React文档。他们在技术上解释这个概念方面做得不错。
-Another approach is component based code splitting. In this method, if a component is currently not displayed to the user, it’s code may be delayed from being sent to the user.
-
-Whichever method you stick to, it is important to understand the trade-offs and not degrade the user experience of your application.
-
-Code splitting is great, and it can improve your application’s performance.
-
-I have taken a conceptual approach to explain code splitting. If you want more technical grounds, please have a look at the official [React docs](https://reactjs.org/docs/code-splitting.html). They do a decent job at explaining the concept technically.
+我只是笼统的解释了代码分割。如果您需要更多技术支持，请查看官方的[React文档](https://reactjs.org/docs/code-splitting.html)。他们在解释技术概念方面做得不错。
 
 ### 结论
 
-现在，您已经有了一个像样的清单来跟踪和修复反应应用中的常见性能问题。去构建一些快速应用程序！
-Now you’ve got a decent checklist for tracking and fixing common performance issues in react apps. Go build some fast apps!
+现在，您已经有了一个像样的清单来跟踪和修复react应用中的常见性能问题。去构建一些更加快速的应用程序吧！
 
 ![](/images/JS_Weekly/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/minimal-rocket-2xA-1.png)
-
-[https://logrocket.com/signup/](https://logrocket.com/signup/)
 
 ## 资源
 * 原文 https://logrocket-blog.ghost.io/death-by-a-thousand-cuts-a-checklist-for-eliminating-common-react-performance-issues/
