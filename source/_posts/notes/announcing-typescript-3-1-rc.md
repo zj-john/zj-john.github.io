@@ -38,7 +38,7 @@ function stringifyAll(...elements) {
 }
 ```
 
-该`stringifyAll`函数接受任意数量的值，将每个元素转换为字符串，并将结果放在一个新数组中，然后返回该数组。  
+`stringifyAll`函数的功能是接受任意数量的参数，将每个元素转换为字符串，并将结果放在一个新数组中，然后返回该数组。  
 如果我们希望支持各种类型转换的`stringifyAll`，我们可以将其声明为：
 
 
@@ -46,7 +46,7 @@ function stringifyAll(...elements) {
 declare function stringifyAll(...elements: unknown[]): Array<string>;
 ```
 
-这个声明表示，“这个东西需要任意数量的元素，并返回一个`string`类型的数组”; 但是，我们`elements`在这次转型中失去了一些信息。
+这个声明表示，“这个东西需要任意数量，不知道什么类型的元素，然后返回一个`string`类型的数组”; 但是，我们`elements`在这次转型中失去了一些信息。
 
 具体来说，类型系统不记得用户传入的元素数量，因此我们的输出类型也没有已知的长度。我们可以通过重载做类似的事情：
 
@@ -58,7 +58,7 @@ declare function stringifyAll(...elements: [unknown, unknown, unknown]): [string
 // ... etc
 ```
 
-呃。我们甚至没有涵盖_四个_要素。你最终会特别容纳所有这些可能的重载，你最终会得到我们所谓的“一千次重载导致的死亡”问题。当然，我们可以使用条件类型而不是重载，但是你会有一堆嵌套的条件类型。
+呃。我们甚至没有涵盖_四个_参数的情况。当然，我们可以使用条件类型而不是重载，但是你会有一堆嵌套的条件类型。
 
 如果只有一种方法可以在这里统一映射每种类型......
 
@@ -91,7 +91,7 @@ function stringifyPerson(p: Person) {
 }
 ```
 
-虽然通知`stringifyPerson`很普遍。我们可以`Stringify`使用映射对象类型在任何给定类型的属性上抽象出-ing类型的概念：
+尽管`stringifyPerson`已经很普适。但我们可以抽象出在任何给定类型的属性上使用映射对象类型把类型`Stringify-ing`化的这种概念：
 
 ```ts
 type Stringify<T> = {
@@ -99,7 +99,7 @@ type Stringify<T> = {
 };
 ```
 
-对于那些不熟悉，我们看这是“为每一个命名的属性`K`中`T`，产生与类型名称的新特性`string`。
+对于新手来说，这可以理解为：为`T`中的每一个属性`K`，产生与类型名称的`string`化的新特性。
 
 并重写我们的函数来使用它：
 
@@ -244,5 +244,5 @@ function foo(x: unknown | (() => string)) {
 
 我们期待听到您对RC的体验。与往常一样，请密切关注[我们的路线图](https://github.com/Microsoft/TypeScript/wiki/Roadmap)，以便在我们稳定时全面了解发布情况。我们希望在短短几周内发布我们的最终版本，所以现在就试试吧！
 
-## 链接
+## 资源
 * 原文 https://blogs.msdn.microsoft.com/typescript/2018/09/13/announcing-typescript-3-1-rc/

@@ -1,5 +1,5 @@
 ---
-title: 评估任何新JavaScript库时需要考虑的12件事【译】
+title: 评估任何新JavaScript库时需要考虑的12件事
 categories:
   - notes
 tags:
@@ -341,5 +341,5 @@ NPMS的人们已经实施了[类似的评级系统](https://npms.io/about)，通
 
 不过，我们希望它可以作为一个有用的起点。如果没有别的，它可以作为一个清单，以确保你没有忽略任何重要的事情，然后再进入未来的大跳跃！
 
-## 原文地址
-https://medium.freecodecamp.org/the-12-things-you-need-to-consider-when-evaluating-any-new-javascript-library-3908c4ed3f49
+## 资源
+* 原文 https://medium.freecodecamp.org/the-12-things-you-need-to-consider-when-evaluating-any-new-javascript-library-3908c4ed3f49

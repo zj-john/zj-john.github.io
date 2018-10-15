@@ -1,5 +1,5 @@
 ---
-title: 你不（可能不）需要Moment.js【译】
+title: 你不（可能不）需要Moment.js
 categories:
   - notes
 tags:
@@ -793,11 +793,5 @@ isDate(new Date());
 ```
 
 
-
-# License
-
-MIT
-
-
-## 原文地址
-https://github.com/you-dont-need/You-Dont-Need-Momentjs
+## 资源
+* 原文 https://github.com/you-dont-need/You-Dont-Need-Momentjs
