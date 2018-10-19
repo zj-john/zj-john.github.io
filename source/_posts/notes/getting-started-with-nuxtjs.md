@@ -4,6 +4,7 @@ categories:
   - notes
   - vue
   - javascript
+  - nuxt
   - 2018.10.12
 tags:
   - JavaScript Weekly
@@ -13,7 +14,7 @@ date: 2018-10-17 12:51:15
 
 ![Vue](/images/JS_Weekly/getting-started-with-nuxtjs/vuel_870x2203f45cdf5cd6c480aa55f7525dfd1eba3.png)
 
-[Nuxt.js](https://zh.nuxtjs.org/)是一个基于 Vue.js 的通用应用框架，其主要目的是构建一个可扩展的，高品质的Vue.js应用程序。Nuxt有哪些优点，是如何实现的，该如何安装它，以及如何在下一个项目中使用它呢？
+[Nuxt.js](https://zh.nuxtjs.org/)是一个基于 Vue.js 的通用应用框架（包括前端和后端），其主要目的是构建一个可扩展的，高品质的Vue.js应用程序。Nuxt有哪些优点，是如何实现的，该如何安装它，以及如何在下一个项目中使用它呢？
 
 本文为您答疑解惑。
 
@@ -115,7 +116,7 @@ Nuxt.js引入了一些额外的功能，属性或方法，以提供更多功能�
 
 这样，当Google尝试索引您的网页时，网页会始终包含内容 - asyncData钩子会为其提供数据。
 
-**fetch**: 此方法处理与store的交互。它允许您即使在渲染组件之前，也可以自由地向Vuex store提供数据。It allows you the liberty of providing data to the Vuex store even before the component is rendered on the view.
+**fetch**: 此方法处理与store的交互。它允许您即使在渲染组件之前，也可以自由地向Vuex store提供数据。
 
 这对于在呈现所述组件之前另一个组件需要来自另一个组件的数据时是完美的。
 This is perfect for when another component needs data from say another component before said component is rendered. 
@@ -323,7 +324,7 @@ npm run build
 这个命令深入我们的代码，分析，生成路由，编译需要编译的文件，然后创建一个名为.nuxt的文件夹，并把所有这些生产需要的文件移动到这里。
 
 现在我们有了一个完全服务器端渲染的Vue.js应用程序。
-> 生成标准的vue程序
+> 带有server.js，可以在node下一键启动服务器端和server端
 
 ### 静态站点生成tatic Site Generated
 要将我们的应用程序生成为静态文件，我们必须运行以下命令：
