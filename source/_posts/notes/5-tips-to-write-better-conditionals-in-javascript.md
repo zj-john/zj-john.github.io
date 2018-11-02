@@ -1,11 +1,12 @@
 ---
 title: 5个技巧，让你在JS中编写更好的条件语句
 categories:
+  - notes  
+tags:
+  - JavaScript Weekly
   - if
   - javascript
   - 2018.10.19
-tags:
-  - JavaScript Weekly
 toc: true
 date: 2018-10-22 14:34:58
 ---

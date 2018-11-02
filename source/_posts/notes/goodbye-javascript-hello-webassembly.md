@@ -2,11 +2,11 @@
 title: 再见JS，Webassembly你好
 categories:
   - notes
+tags:
+  - JavaScript Weekly
   - javascript
   - webassembly
   - 2018.10.05
-tags:
-  - JavaScript Weekly
 toc: true
 date: 2018-10-10 11:16:35
 ---

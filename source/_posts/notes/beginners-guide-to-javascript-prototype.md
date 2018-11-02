@@ -2,11 +2,11 @@
 title: JavaScript原型入门指南
 categories:
   - notes
+tags:
+  - JavaScript Weekly
   - JavaScript
   - prototype
   - 2018.10.05
-tags:
-  - JavaScript Weekly
 toc: true
 date: 2018-10-08 14:13:35
 ---

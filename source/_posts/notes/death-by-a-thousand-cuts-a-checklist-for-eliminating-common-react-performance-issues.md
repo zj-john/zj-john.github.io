@@ -1,13 +1,13 @@
 ---
-title: "告别一千次崩溃",一个消除常见React性能问题的清单
+title: 告别一千次崩溃,一个消除常见React性能问题的清单
 categories:
   - notes
+tags:
+  - JavaScript Weekly
   - web development
   - javascript
   - react
   - 2018.10.12
-tags:
-  - JavaScript Weekly
 toc: true
 date: 2018-10-15 15:49:15
 ---

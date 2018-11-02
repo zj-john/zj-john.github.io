@@ -1,9 +1,8 @@
 ---
-title: Chrome devtools-Performance面板-初步使用[译]
+title: Chrome devtools-Performance面板-初步使用
 categories:
   - notes
 tags:
-  - note
   - Chrome
   - devtools
 toc: true

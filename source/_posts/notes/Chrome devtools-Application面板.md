@@ -3,7 +3,6 @@ title: Chrome devtools-Application面板
 categories:
   - notes
 tags:
-  - note
   - Chrome
   - devtools
 toc: true

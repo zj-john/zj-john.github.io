@@ -1,12 +1,13 @@
 ---
 title: 智能打包，如何仅为旧版浏览器提供旧版代码
 categories:
+  - notes
+tags:
+  - JavaScript Weekly
   - browsers
   - performance
   - javascript
   - 2018.10.19
-tags:
-  - JavaScript Weekly
 toc: true
 date: 2018-10-23 11:33:00
 ---

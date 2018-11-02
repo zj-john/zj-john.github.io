@@ -3,7 +3,6 @@ title: Chrome devtools-Performance面板-技巧
 categories:
   - notes
 tags:
-  - note
   - Chrome
   - devtools
 toc: true

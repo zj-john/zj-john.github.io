@@ -4,6 +4,7 @@ categories:
   - notes
 tags:
   - JavaScript Weekly
+  - 2018.09.14
 toc: true
 date: 2018-09-17 15:51:01
 ---

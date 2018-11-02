@@ -3,7 +3,6 @@ title: JavaScript内存泄漏
 categories:
   - notes
 tags:
-  - note
   - JavaScript
   - 内存泄漏
 toc: true

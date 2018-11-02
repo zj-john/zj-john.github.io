@@ -2,12 +2,12 @@
 title: 自定义元素简介
 categories:
   - notes
+tags:
+  - JavaScript Weekly
   - customelements
   - javascript
   - html
   - 2018.10.05
-tags:
-  - JavaScript Weekly
 toc: true
 date: 2018-10-11 15:48:15
 ---

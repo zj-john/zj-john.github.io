@@ -1,13 +1,14 @@
 ---
 title: 如何利用Angular 6和Material Design构建新闻应用程序
 categories:
+  - note
+tags:
+  - JavaScript Weekly
   - angular6
   - material
   - javascript
   - application
   - 2018.10.05
-tags:
-  - JavaScript Weekly
 toc: true
 date: 2018-10-12 12:04:15
 ---

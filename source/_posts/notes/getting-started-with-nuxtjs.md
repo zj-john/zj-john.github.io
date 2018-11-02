@@ -2,12 +2,12 @@
 title: Nuxt.js入门
 categories:
   - notes
+tags:
+  - JavaScript Weekly
   - vue
   - javascript
   - nuxt
   - 2018.10.12
-tags:
-  - JavaScript Weekly
 toc: true
 date: 2018-10-17 12:51:15
 ---

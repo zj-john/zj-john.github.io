@@ -2,11 +2,11 @@
 title: Create React App 2.0发布- Babel 7, Sass, and More
 categories:
   - notes
+tags:
+  - JavaScript Weekly
   - create react app
   - react-scripts
   - 2018.10.05
-tags:
-  - JavaScript Weekly
 toc: true
 date: 2018-10-09 14:12:45
 ---

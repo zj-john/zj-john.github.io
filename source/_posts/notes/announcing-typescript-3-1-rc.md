@@ -2,10 +2,10 @@
 title: TypeScript 3.1 RC上线
 categories:
   - notes
-  - typescript
-  - 2018.09.14
 tags:
   - JavaScript Weekly
+  - typescript
+  - 2018.09.14
 toc: true
 date: 2018-09-17 20:12:01
 ---
