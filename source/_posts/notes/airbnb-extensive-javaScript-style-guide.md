@@ -68,12 +68,10 @@ console.log(foo[0], bar[0]); // => 9, 9
 ### references--prefer-const
 
 优先使用`const`声明变量
+**原因：** 使用`const`可以让你避免重复赋值，也可以认清哪些真正是“变”量。
 
-> eslint: 
-[`prefer-const`](http://eslint.org/docs/rules/prefer-const.html), 
-[`no-const-assign`](http://eslint.org/docs/rules/no-const-assign.html)
+> eslint: [`prefer-const`](http://eslint.org/docs/rules/prefer-const.html), [`no-const-assign`](http://eslint.org/docs/rules/no-const-assign.html)
 
-> Why? 使用`const`可以让你避免重复赋值，也可以认清哪些真正是“变”量。
 
 ```javascript
 // bad
@@ -87,11 +85,10 @@ const b = 2;
 
 ### references--disallow-var
 如果你有对参数重新赋值的需求，那就用`let`吧。
+**原因：** 因为`let`是块级作用域，而`var`是函数级作用域。`let`完胜。
 
-> eslint: 
-[`no-var`](http://eslint.org/docs/rules/no-var.html)
+> eslint: [`no-var`](http://eslint.org/docs/rules/no-var.html)
 
-> Why? 因为`let`是块级作用域，而`var`是函数级作用域。`let`完胜。
 
 ```javascript
 // bad
@@ -125,8 +122,7 @@ console.log(b); // ReferenceError
 ### objects--no-new
 使用字面值({})创建对象. 
 
-> eslint: 
-[`no-new-object`](http://eslint.org/docs/rules/no-new-object.html)
+> eslint: [`no-new-object`](http://eslint.org/docs/rules/no-new-object.html)
 
 ```javascript
 // bad
@@ -138,8 +134,7 @@ const item = {};
 
 ### es6-computed-properties
 当创建一个包含动态属性名的对象时，用下面的方式：
-
-> Why? 这可以使你的对象定义看起来更整洁，找属性的时候也方便。
+**原因：** 这可以使你的对象定义看起来更整洁，找属性的时候也方便。
 
 ```javascript
 
@@ -165,8 +160,7 @@ const obj = {
 ### es6-object-shorthand
 
 用对象方法的简写方式. 
-> eslint: 
-[`object-shorthand`](http://eslint.org/docs/rules/object-shorthand.html)
+> eslint: [`object-shorthand`](http://eslint.org/docs/rules/object-shorthand.html)
 
 ```javascript
 // bad
@@ -192,11 +186,11 @@ const atom = {
 ### es6-object-concise
 
 用属性值缩写.
+**原因：** 这样写的更少且更可读
 
-> eslint: 
-[`object-shorthand`](http://eslint.org/docs/rules/object-shorthand.html)
+> eslint: [`object-shorthand`](http://eslint.org/docs/rules/object-shorthand.html)
 
-> Why? 这样写的更少且更可读
+
 
 ```javascript
 const lukeSkywalker = 'Luke Skywalker';
@@ -214,8 +208,7 @@ const obj = {
 
 ### objects--grouped-shorthand
 将所有缩写的属性放在对象声明的开始.
-
-> Why? 这样也是为了更方便的知道有哪些属性用了缩写.
+**原因：** 这样也是为了更方便的知道有哪些属性用了缩写.
 
 ```javascript
 const anakinSkywalker = 'Anakin Skywalker';
@@ -244,11 +237,10 @@ const obj = {
 
 ### objects--quoted-props
 只对必须要使用引号的属性使用引号 `''`. 
+**原因：** 通常我们认为这种方式主观上易读。他优化了代码，并且更容易压缩。
 
-> eslint: 
-[`quote-props`](http://eslint.org/docs/rules/quote-props.html)
+> eslint: [`quote-props`](http://eslint.org/docs/rules/quote-props.html)
 
-> Why? 通常我们认为这种方式主观上易读。他优化了代码，并且更容易压缩。
 
 ```javascript
 // bad
@@ -268,8 +260,7 @@ const good = {
 
 ### objects--prototype-builtins
 不要直接调用`Object.prototype`上的方法，如`hasOwnProperty`, `propertyIsEnumerable`, `isPrototypeOf`。
-
-> Why? 主要是怕一些对象的默认方法被更改或屏蔽过。如：`{ hasOwnProperty: false }` - 或这是一个空对象`Object.create(null)`
+**原因：**：主要是怕一些对象的默认方法被更改或屏蔽过。如：`{ hasOwnProperty: false }` - 或这是一个空对象`Object.create(null)`
 
 ```javascript
 // bad
@@ -288,8 +279,6 @@ console.log(has.call(object, key));
 
 ### objects--rest-spread
 对象浅拷贝时，更推荐使用扩展运算符[就是`...`运算符]，而不是[`Object.assign`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)。获取对象指定的几个属性时，用对象的rest解构运算符[也是`...`运算符]更好。
-
-+ 这一段不太好翻译出来， 大家看下面的例子就懂了。^.^
 
 ```javascript
 // very bad
@@ -310,12 +299,11 @@ const copy = { ...original, c: 3 }; // copy => { a: 1, b: 2, c: 3 }
 const { a, ...noA } = copy; // noA => { b: 2, c: 3 }
 ```
 
-
-
 ## Arrays
 
 ### arrays--literals
-用字面量赋值。 eslint: [`no-array-constructor`](http://eslint.org/docs/rules/no-array-constructor.html)
+用字面量赋值。 
+> eslint: [`no-array-constructor`](http://eslint.org/docs/rules/no-array-constructor.html)
 
 ```javascript
 // bad
@@ -393,7 +381,9 @@ const baz = Array.from(foo, bar);
 ```
 
 ### arrays--callback-return
-在数组方法的回调函数中使用 return 语句。 如果函数体由一条返回一个表达式的语句组成， 并且这个表达式没有副作用， 这个时候可以忽略return，详见 [8.2](#arrows--implicit-return). eslint: [`array-callback-return`](http://eslint.org/docs/rules/array-callback-return)
+在数组方法的回调函数中使用 return 语句。 如果函数体由一条返回一个表达式的语句组成， 并且这个表达式没有副作用， 这个时候可以忽略return，详见 [8.2](#arrows--implicit-return). 
+
+> eslint: [`array-callback-return`](http://eslint.org/docs/rules/array-callback-return)
 
 ```javascript
 // good
@@ -481,9 +471,10 @@ const numberInArray = [
 ## Destructuring
 
 ### destructuring--object
-用对象的解构赋值来获取和使用对象某个或多个属性值。 eslint: [`prefer-destructuring`](https://eslint.org/docs/rules/prefer-destructuring)
+用对象的解构赋值来获取和使用对象某个或多个属性值。 
+> eslint: [`prefer-destructuring`](https://eslint.org/docs/rules/prefer-destructuring)
 
-> Why? 解构保存了这些属性的临时值/引用
+**原因** ：解构保存了这些属性的临时值/引用
 
 ```javascript
 // bad
@@ -523,7 +514,7 @@ const [first, second] = arr;
 ### destructuring--object-over-array
 多个返回值用对象的解构，而不是数据解构。
 
-> Why? 你可以在后期添加新的属性或者变换变量的顺序而不会打破原有的调用
+**原因**：你可以在后期添加新的属性或者变换变量的顺序而不会打破原有的调用
 
 ```javascript
 // bad
@@ -547,7 +538,8 @@ const { left, top } = processInput(input);
 
 ## Strings
 ### strings--quotes
-对string用单引号 `''` 。 eslint: [`quotes`](https://eslint.org/docs/rules/quotes.html)
+对string用单引号 `''` 。 
+> eslint: [`quotes`](https://eslint.org/docs/rules/quotes.html)
 
 ```javascript
 // bad
@@ -562,7 +554,7 @@ const name = 'Capt. Janeway';
 
 ### strings--line-length
 超过100个字符的字符串不应该用string串联成多行。
-> Why? 被折断的字符串工作起来是糟糕的而且使得代码更不易被搜索。
+**原因**：折断的字符串很容易出错，而且使得代码可读性和搜索性变差。
 
 ```javascript
 // bad
@@ -581,9 +573,10 @@ const errorMessage = 'This is a super long error that was thrown because of Batm
 ```
 
 ### es6-template-literals
-用字符串模板而不是字符串拼接来组织可编程字符串。 eslint: [`prefer-template`](https://eslint.org/docs/rules/prefer-template.html) [`template-curly-spacing`](https://eslint.org/docs/rules/template-curly-spacing)
+用字符串模板而不是字符串拼接来组织可编程字符串。 
+> eslint: [`prefer-template`](https://eslint.org/docs/rules/prefer-template.html) [`template-curly-spacing`](https://eslint.org/docs/rules/template-curly-spacing)
 
-> Why? 模板字符串更具可读性、语法简洁、字符串插入参数。
+**原因**：模板字符串更具可读性、语法简洁、字符串插入参数。
 
 ```javascript
 // bad
@@ -608,12 +601,14 @@ function sayHi(name) {
 ```
 
 ### strings--eval 
-永远不要在字符串中用`eval()`，他就是潘多拉盒子。 eslint: [`no-eval`](https://eslint.org/docs/rules/no-eval)
+永远不要在字符串中用`eval()`，他就是潘多拉盒子。 
+> eslint: [`no-eval`](https://eslint.org/docs/rules/no-eval)
 
 ### strings--escaping
-不要使用不必要的转义字符。eslint: [`no-useless-escape`](http://eslint.org/docs/rules/no-useless-escape)
+不要使用不必要的转义字符。
+> eslint: [`no-useless-escape`](http://eslint.org/docs/rules/no-useless-escape)
 
-> Why? 反斜线可读性差，所以他们只在必须使用时才出现哦
+**原因**：反斜线可读性差，所以他们只在必须使用时才出现哦
 
 ```javascript
 // bad
@@ -629,7 +624,8 @@ const foo = `my name is '${name}'`;
 
 ## Functions
 ### functions--declarations
-用命名函数表达式而不是函数声明。eslint: [`func-style`](http://eslint.org/docs/rules/func-style)
+用命名函数表达式而不是函数声明。
+> eslint: [`func-style`](http://eslint.org/docs/rules/func-style)
 
 > 函数表达式： const func = function () {}
 
@@ -660,7 +656,8 @@ const short = function longUniqueMoreDescriptiveLexicalFoo() {
 ```
 
 ### functions--iife
-把立即执行函数包裹在圆括号里。 eslint: [`wrap-iife`](http://eslint.org/docs/rules/wrap-iife.html)
+把立即执行函数包裹在圆括号里。 
+> eslint: [`wrap-iife`](http://eslint.org/docs/rules/wrap-iife.html)
 
 > Why? immediately invoked function expression = IIFE
 > Why? 一个立即调用的函数表达式是一个单元 - 把它和他的调用者（圆括号）包裹起来，在括号中可以清晰的地表达这些。
@@ -674,7 +671,8 @@ const short = function longUniqueMoreDescriptiveLexicalFoo() {
 ```
 
 ### functions--in-blocks
-不要在非函数块（if、while等等）内声明函数。把这个函数分配给一个变量。浏览器会允许你这样做，但浏览器解析方式不同，这是一个坏消息。【详见`no-loop-func`】 eslint: [`no-loop-func`](http://eslint.org/docs/rules/no-loop-func.html)
+不要在非函数块（if、while等等）内声明函数。把这个函数分配给一个变量。浏览器会允许你这样做，但浏览器解析方式不同，这是一个坏消息。【详见`no-loop-func`】 
+> eslint: [`no-loop-func`](http://eslint.org/docs/rules/no-loop-func.html)
 
 ### functions--note-on-blocks
 **Note:** 在ECMA-262中 [块 `block`] 的定义是： 一系列的语句； 但是函数声明不是一个语句。 函数表达式是一个语句。
@@ -711,7 +709,9 @@ function foo(name, options, args) {
 }
 ```
 ### es6-rest
-不要使用`arguments`，用rest语法`...`代替。 eslint: [`prefer-rest-params`](http://eslint.org/docs/rules/prefer-rest-params)
+不要使用`arguments`，用rest语法`...`代替。 
+
+> eslint: [`prefer-rest-params`](http://eslint.org/docs/rules/prefer-rest-params)
 
 > Why? `...`明确你想用那个参数。而且rest参数是真数组，而不是类似数组的`arguments`
 

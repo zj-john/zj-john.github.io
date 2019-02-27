@@ -140,8 +140,7 @@ Bundlephobia是一个非常快速评估库潜在重量的好工具，它通过�
 A great tool for very quickly evaluating the potential weight of a library is [Bundlephobia](https://bundlephobia.com/), which calculates the rough effect of including a module by analysing its source code. The only caveat being that it can’t take into account whether you’re including the whole library or just some parts – more on that shortly. It’s great to use as a general guide, though.
 
 ## 如果可以，仅导入您需要的内容
-评估第三方库时要记住的另一个重点是可分解性问题。
-Another important point to bear in mind when evaluating third-party libraries is the matter of _decomposability_.
+评估第三方库时的另一个重点是_可分解性问题_。
 
 也就是说，如果一个库支持各种各样的用例，其中大部分都是你不会使用的，它是否以这样的方式编写，只允许你只提取你真正需要的那些部分？像Webpack或Rollup这样的捆绑器具有“树摇动”或“死代码消除”的概念，这是确保输出仅包括您实际使用的代码的不同方式。
 That is, if a library supports a whole variety of use-cases, most of which you won’t be using, has it been written in such a way that allows you to pull in only those parts you actually need? Bundlers like Webpack or Rollup feature the idea of “tree-shaking” or “dead code elimination” which are different ways of ensuring the output only includes the code you actually use.

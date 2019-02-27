@@ -1,5 +1,5 @@
 ---
-title: react程序中 Failed to execute 'insertBefore' on 'Node'&& Cannot read property 'nextSibling' of null 【待解决】
+title: react程序中 Failed to execute 'insertBefore' on 'Node'&& Cannot read property 'nextSibling' of null
 categories:
   - tips
 tags:
@@ -159,4 +159,17 @@ export default class ActionModalByRelation extends React.Component {
 }
 ```
 
-## 解决方案【待解决】
+## 解决方案
+
+后来遇到了如下类似报错：  
+NotFoundError: Failed to execute 'insertBefore' on 'Node': The node before which the new node is to be inserted is not a child of this node.
+
+通过给组件外套一层<div>解决了。
+
+```js
+import Datatable from 'react-datatable-jq'
+
+<div>
+	<Datatable {...props}>
+</div>
+```
