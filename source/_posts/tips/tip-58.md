@@ -103,4 +103,5 @@ fetch还是一个相对比较新的API，那问题转换为
 
 ## 参考文档
 1. https://github.com/github/fetch#sending-cookies
-2. https://stackoverflow.com/questions/34558264/fetch-api-with-cookie 
+2. https://stackoverflow.com/questions/34558264/fetch-api-with-cookie
+3. https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch
