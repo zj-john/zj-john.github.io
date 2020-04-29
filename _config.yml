@@ -90,7 +90,7 @@ theme: yilia
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:zj-john/zj-john.github.io.git
+  repo: https://github.com/zj-john/zj-john.github.io.git
   branch: master
 
 jsonContent:

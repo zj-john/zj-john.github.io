@@ -7,7 +7,7 @@ tags:
   - chrome
   - host
 toc: false
-date: 2020-04-01 20:45:16
+date: 2020-04-26 20:45:16
 ---
 
    
@@ -88,6 +88,107 @@ ReferenceError: primordials is not defined
   }
 }
 ```
+
+## Mysql
+### install
+
+1. [官网](https://dev.mysql.com/downloads/mysql/)下载，解压到需要的目录，比如 c:\mysql  
+> 这里提供的下载地址是免安装版
+2. 在安装MySQL程序的文件夹下创建一个data文件夹，用来存放数据库文件。使用记事本创建一个my.ini文件
+3. 设置my.ini 内容
+
+```
+[mysqld]
+
+# 设置端口3306（mysql的默认端口为3306）
+
+port=3306
+
+# 设置mysql的安装目录
+
+basedir=c:\mysql
+
+# 设置mysql数据库的数据的存放目录
+
+datadir=c:\mysql\data
+
+# 允许最大连接数
+
+max_connections=200
+
+# 允许连接失败的次数。
+
+max_connect_errors=10
+
+# 设置mysql服务器使用的字符集，默认为UTF8
+
+character-set-server=utf8
+
+# 创建新表时将使用的默认存储引擎
+
+default-storage-engine=INNODB
+
+[mysql]
+
+# 设置mysql客户端默认字符集
+
+default-character-set=utf8
+
+[client]
+
+# 设置mysql客户端连接服务端时默认使用的端口
+
+port=3306
+
+default-character-set=utf8
+```
+4. 进入安装目录下的bin文件夹，比如：c:\mysql\bin，启动CMD。执行初始化
+```
+mysqld --initialize --user=mysql --console
+```
+在返回的结果中，得到一个root帐户的初始密码
+
+5. 把mysql注册到windows的服务中，然后启动服务
+```
+mysqld -install
+net start mysql
+```
+6. 使用刚才得到的初始密码，登录。并修改密码
+```
+mysql -u root -p
+```
+
+修改密码：假设新密码是666666
+```
+ALTER USER USER() IDENTIFIED BY '666666';
+```
+7. 方便以后使用，把mysql命令加入环境变量
+
+### 忘记root密码
+1. 先打开CMD命令窗口，停止mysql的服务
+```
+net stop mysql
+```
+
+2. 进行免密登录
+```
+mysqld --console --skip-grant-tables --shared-memory
+```
+
+3. 保持当前的窗口不动，新开一个CMD命令窗口，登录
+```
+mysql -u root
+```
+4. 修改密码
+把root的密码改为空
+```
+use mysql
+UPDATE mysql.user SET authentication_string='' WHERE user='root';
+select host,user,authentication_string from mysql.user;
+```
+
+5. 可以关闭之前的窗口了，打开一个新窗口把密码从空改为需要的值即可。参照安装时的密码修改
+
 
 ## 参考文档
 1. https://github.com/google/google-api-javascript-client/issues/561
