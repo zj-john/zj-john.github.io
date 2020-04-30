@@ -22,6 +22,8 @@ date: 2019-08-01 11:45:16
 
 ![](/images/tips/fetch_cookie_3.png)
 
+<!-- more -->
+
 但比较奇怪的是：
 
 1. get接口正常，cookie传给了后端
