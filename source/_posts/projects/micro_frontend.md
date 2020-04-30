@@ -22,7 +22,6 @@ toc: true
 2. 独立开发/维护/测试（沙盒）
 3. 增量打包/发布
 
-挂载应用到不同的dom上
 
 
 # 主要问题
@@ -58,11 +57,13 @@ React16 + ReactRouter5
 
 3. 各个框架适配
 
-## single-spa 最小demo
+## single-spa
 
-## single-spa react demo
 
 ## 抛弃single-spa
+
+
+>挂载应用到不同的dom上
 
 # 延伸
 每一个独立组件或者说JS的模块就是一个应用，用调用service的方法使用组件

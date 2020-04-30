@@ -3,10 +3,11 @@ title: React16 ReactRouter5特性
 categories:
   - notes
 tags:
-  - JavaScript Weekly
-  - 2018.09.14
+  - react16
+  - router
+  - cssloader
 toc: true
-date: 2018-09-17 20:36:38
+date: 2020-04-24 20:36:38
 ---
 
 
@@ -16,7 +17,7 @@ date: 2018-09-17 20:36:38
 
 create-react-app建立的demo项目中，使用了React.StrictMode
 
-```
+```js
 ReactDOM.render(
   <React.StrictMode>
     <Basic />
@@ -40,24 +41,24 @@ ReactDOM.render(
 
 # Link 
 以前的v2/v3版本
-```
+```js
 import { Link } from 'react-router'
 ```
 从V4之后
-```
+```js
 import { Link } from 'react-router-dom'
 ```
 
 # router
 以前
-```
+```js
 import { hashHistory } from 'react-router'
 const history = syncHistoryWithStore(hashHistory, store);
 <Router history={history} routes={routes} />
 ```
 
 现在
-```
+```js
 import {
   HashRouter as Router,
   Switch,
@@ -89,7 +90,7 @@ ReactDOM.render(
 
 ## clean-webpack-plugin
 过去0.1.18/0.1.19
-```
+```js
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 new CleanWebpackPlugin(['*.*', 'js', 'scripts'], {
     root: path.resolve(__dirname, './dist'),
@@ -98,7 +99,7 @@ new CleanWebpackPlugin(['*.*', 'js', 'scripts'], {
 ```
 
 现在^3.0.0
-```
+```js
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 new CleanWebpackPlugin({
   cleanAfterEveryBuildPatterns: ['build/home']
@@ -108,3 +109,6 @@ new CleanWebpackPlugin({
 ## css-loader
 
 > Webpacker only supports css-loader versions greater than 2.1.1, and less than 3.0.0.
+
+
+持续补充中……
