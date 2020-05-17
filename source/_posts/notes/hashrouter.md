@@ -1,5 +1,5 @@
 ---
-title: hash路由下，允许单路由跳过登录
+title: hash路由下，允许个别路由跳过登录
 categories:
   - notes
 tags:
